@@ -6,7 +6,7 @@
 
 /**
  * Plugin Name: Make Paths Relative
- * Version: 0.2
+ * Version: 0.2.1
  * Plugin URI: https://wordpress.org/plugins/make-paths-relative/
  * Description: This plugin converts the URL(Links) to relative instead of absolute.
  * Donate link: https://www.paypal.me/yasglobal
@@ -60,6 +60,9 @@ if( !is_admin() ) {
 } else {
   require_once(MAKE_PATHS_RELATIVE__PLUGIN_DIR.'admin/class.make-paths-relative-admin.php');
   add_action( 'init', array( 'Make_Paths_Relative_Admin', 'init' ) );
+
+  require_once(MAKE_PATHS_RELATIVE__PLUGIN_DIR.'frontend/class.make-paths-relative.php');   
+  add_action( 'init', array( 'Make_Paths_Relative', 'init' ) );
 
   $plugin = plugin_basename(__FILE__); 
   add_filter("plugin_action_links_$plugin", 'make_paths_relative_settings_link' );

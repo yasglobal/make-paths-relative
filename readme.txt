@@ -1,10 +1,10 @@
 ﻿=== Make Paths Relative ===
-Contributors: aliya-yasir, sasiddiqui, yasglobal
+Contributors: aliya yasir, sasiddiqui, yasglobal
 Donate link: https://www.paypal.me/yasglobal
 Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src
 Requires at least: 3.5
-Tested up to: 4.7
-Stable tag: 0.2
+Tested up to: 4.8
+Stable tag: 0.2.1
 License: GPL V3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -23,6 +23,8 @@ This plugin can make(convert) the paths(URLs) to relative instead of absolute. T
 * Image Paths(src)
 
 All the above permalinks and src can be converted to relative instead absolute by using this plugin. You can select the options from the plugin settings page. 
+
+= Filter =
 
 If you want to exclude some Permalink or src to be relative so, you can use `paths_relative` filter in your theme's functions.php or in your custom plugin.
 
@@ -59,7 +61,14 @@ A. Installing this plugin is the easiest way to make the paths(Permalinks + src)
 = Q. May i select the paths which i want to be show as relative items? = 
 A. Yes, You can select the items you want to be relative.
 
+= Q. May i exclude some items to be shown as absolute? = 
+A. Yes, You can exclude the items by using the add_filter (You can find the filter in the Description Area).
+
 == Changelog ==
+
+= 0.2.1 =
+
+* Added Capability to make the Paths relative on Admin Dashboard 
 
 = 0.2 =
 
