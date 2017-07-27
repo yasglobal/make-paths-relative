@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yasglobal
 Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src
 Requires at least: 3.5
 Tested up to: 4.8
-Stable tag: 0.2.1
+Stable tag: 0.3
 License: GPL V3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -40,6 +40,12 @@ function change_path($link) {
 add_filter('paths_relative', 'change_path' );
 `
 
+If you doesn't want to Make the Paths relative for srcset(Responsive Images) so, just add this line in your theme's funcstion.php
+
+`
+add_filter('srcset_paths_relative', '__return_false');
+`
+
 = Make sure to check the settings Page =
 
 == Installation ==
@@ -66,14 +72,18 @@ A. Yes, You can exclude the items by using the add_filter (You can find the filt
 
 == Changelog ==
 
+= 0.3 =
+
+  * Make the Paths Relative of srcset(Responsive Images)
+
 = 0.2.1 =
 
-* Added Capability to make the Paths relative on Admin Dashboard 
+  * Added Capability to make the Paths relative on Admin Dashboard 
 
 = 0.2 =
 
-* Optimized the Plugin to provide the better performance and added the filter
+  * Optimized the Plugin to provide the better performance and added the filter
 
 = 0.1 =
 
-* First release on wordpress.org.
+  * First release on wordpress.org.

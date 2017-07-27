@@ -68,6 +68,23 @@ class Make_Paths_Relative {
     //Filter to make the media(image) src to relative
     if( isset($make_relative_paths['image_paths']) && !empty($make_relative_paths['image_paths']) ) {
       add_filter( 'wp_get_attachment_url', array('Make_Paths_Relative', 'make_paths_relative_remove') );
+			add_filter( 'wp_calculate_image_srcset', array('Make_Paths_Relative', 'make_paths_relative_remove_srcset') );
     }
   }
+
+	/**
+	 * Make the srcset to be relative for responsive images
+	 */
+	public function make_paths_relative_remove_srcset($image_srcset) {
+
+		if (apply_filters('srcset_paths_relative', '__true')) {
+			foreach($image_srcset as $key => $value) {
+				if (isset($value['url'])) 
+					$image_srcset[$key]['url'] = str_replace(self::$make_paths_relative_url, '', $value['url']);
+			}
+		}
+
+		return $image_srcset;
+	}
+
 }
