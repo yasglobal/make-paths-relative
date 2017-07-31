@@ -17,10 +17,19 @@ class Make_Paths_Relative {
 
       $make_relative_paths = unserialize( get_option('make_paths_relative') );
       
-      self::$make_paths_relative_url = site_url();
+
+      $host_name = site_url();
       if( isset($make_relative_paths['site_url']) && !empty($make_relative_paths['site_url']) ) {
-        self::$make_paths_relative_url = $make_relative_paths['site_url'];
+        $host_name = $make_relative_paths['site_url'];
       }
+			if (strpos($host_name, 'http://') !== false) {
+				$host_name = str_replace('http://', '', $host_name);	
+			} else if (strpos($host_name, 'https://') !== false) {
+				$host_name = str_replace('https://', '', $host_name);
+			} else if (strpos($host_name, '//') !== false) {
+				$host_name = str_replace('//', '', $host_name);
+			}
+			self::$make_paths_relative_url = $host_name; 
       
       if( isset($make_relative_paths) && !empty($make_relative_paths) ) {
         Make_Paths_Relative::make_paths_relative_applied($make_relative_paths);
@@ -32,7 +41,10 @@ class Make_Paths_Relative {
    * It makes the permalinks, scripts, styles and image URLs(srd) to relative
    */
   public static function make_paths_relative_remove($link) {
-    $relative_link = str_replace(self::$make_paths_relative_url, '', $link);
+		$relative_link = $link;
+    $relative_link = str_replace('https://' . self::$make_paths_relative_url, '', $relative_link);
+		$relative_link = str_replace('http://' . self::$make_paths_relative_url, '', $relative_link);
+		$relative_link = str_replace('//' . self::$make_paths_relative_url, '', $relative_link);
     return apply_filters('paths_relative', $relative_link);
   }
   
