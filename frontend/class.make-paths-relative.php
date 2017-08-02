@@ -92,7 +92,10 @@ class Make_Paths_Relative {
 		if (apply_filters('srcset_paths_relative', '__true')) {
 			foreach($image_srcset as $key => $value) {
 				if (isset($value['url'])) 
-					$image_srcset[$key]['url'] = str_replace(self::$make_paths_relative_url, '', $value['url']);
+          $value['url'] = str_replace('https://' . self::$make_paths_relative_url, '', $value['url']);
+          $value['url'] = str_replace('http://' . self::$make_paths_relative_url, '', $value['url']);
+          $value['url'] = str_replace('//' . self::$make_paths_relative_url, '', $value['url']);
+          $image_srcset[$key]['url'] = $value['url'];
 			}
 		}
 
