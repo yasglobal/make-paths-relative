@@ -1,10 +1,10 @@
 ﻿=== Make Paths Relative ===
-Contributors: aliya yasir, sasiddiqui, yasglobal
+Contributors: sasiddiqui, aliya yasir
 Donate link: https://www.paypal.me/yasglobal
 Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src
 Requires at least: 3.5
 Tested up to: 4.8
-Stable tag: 0.4.1
+Stable tag: 0.5
 License: GPL V3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -71,6 +71,10 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filter in the Description Area).
 
 == Changelog ==
+
+= 0.5 =
+  
+  * Added feature to Exlude PostTypes
 
 = 0.4.1 =
 

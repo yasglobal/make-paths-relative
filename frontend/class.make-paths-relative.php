@@ -41,6 +41,13 @@ class Make_Paths_Relative {
    * It makes the permalinks, scripts, styles and image URLs(srd) to relative
    */
   public static function make_paths_relative_remove($link) {
+    $current_post_type = get_post_type();
+    if (isset($current_post_type) && !empty($current_post_type)) {
+      $get_exclude_post_types = unserialize( get_option('make_paths_relative_exclude') );
+      if (isset($get_exclude_post_types['post_types'][$current_post_type]) && $get_exclude_post_types['post_types'][$current_post_type] == "on") {
+        return $link;
+      }
+    }
 		$relative_link = $link;
     $relative_link = str_replace('https://' . self::$make_paths_relative_url, '', $relative_link);
 		$relative_link = str_replace('http://' . self::$make_paths_relative_url, '', $relative_link);
@@ -88,6 +95,14 @@ class Make_Paths_Relative {
 	 * Make the srcset to be relative for responsive images
 	 */
 	public function make_paths_relative_remove_srcset($image_srcset) {
+    
+    $current_post_type = get_post_type();
+    if (isset($current_post_type) && !empty($current_post_type)) {
+      $get_exclude_post_types = unserialize( get_option('make_paths_relative_exclude') );
+      if (isset($get_exclude_post_types['post_types'][$current_post_type]) && $get_exclude_post_types['post_types'][$current_post_type] == "on") {
+        return $image_srcset;
+      }
+    }
 
 		if (apply_filters('srcset_paths_relative', '__true')) {
 			foreach($image_srcset as $key => $value) {

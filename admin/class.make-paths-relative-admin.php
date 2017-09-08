@@ -14,15 +14,17 @@ class Make_Paths_Relative_Admin {
     if( !self::$initiated ) {
       self::$initiated = true;
 
-      add_action( 'admin_menu', array('Make_Paths_Relative_Admin', 'make_paths_relative_menu') );
+      add_action( 'admin_menu', array('Make_Paths_Relative_Admin', 'admin_menu') );
 		}
   }
 
-  public static function make_paths_relative_menu() {
-    add_menu_page('Make Paths Relative Settings', 'Make Paths Relative', 'administrator', 'make-paths-relative-settings', array('Make_Paths_Relative_Admin', 'make_paths_relative_settings_page'));
+  public static function admin_menu() {
+    add_menu_page('Make Paths Relative Settings', 'Make Paths Relative', 'administrator', 'make-paths-relative-settings', array('Make_Paths_Relative_Admin', 'admin_settings_page'));
+    add_submenu_page( 'make-paths-relative-settings', 'Make Paths Relative Settings', 'Settings', 'administrator', 'make-paths-relative-settings', array('Make_Paths_Relative_Admin', 'admin_settings_page') );
+    add_submenu_page( 'make-paths-relative-settings', 'Exclude Posts', 'Exclude Posts', 'administrator', 'make-paths-relative-exclude-posts', array('Make_Paths_Relative_Admin', 'exclude_posts_page') );
   }
 
-  public static function make_paths_relative_settings_page() {
+  public static function admin_settings_page() {
     if ( !current_user_can( 'administrator' ) )  {
       wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
@@ -132,5 +134,50 @@ class Make_Paths_Relative_Admin {
       </form>
     </div>
     <?php
+  }
+  
+  public function exclude_posts_page() {
+    if ( !current_user_can( 'administrator' ) )  {
+      wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+    }
+    if (isset($_POST['submit'])){
+      $exclude_post_types = array();
+      foreach ($_POST as $key => $value) {
+				if ($key === 'submit')
+					continue;
+				$exclude_post_types['post_types'][$key] = $value;
+			}
+      update_option('make_paths_relative_exclude', serialize( $exclude_post_types ) );
+    }
+    $post_types = get_post_types( '', 'objects' );
+    $get_exclude_post_types = unserialize( get_option('make_paths_relative_exclude') );
+    ?>
+    <div class="wrap">
+		    <h1><?php _e('Exclude Posts', 'make-paths-relative'); ?></h1>
+		    <div>
+						<p><?php _e('Select the PostTypes to exclude it.', 'make-paths-relative'); ?></p>
+			  </div>
+		    <form enctype="multipart/form-data" action="" method="POST" id="make-paths-relative-exclude-posts">
+            <table class="form-table">
+            <?php $get_post_type = array(); ?>
+            <?php foreach ( $post_types as $post_type ) {
+              if ( $post_type->name == 'revision' || $post_type->name == 'nav_menu_item' ) {
+                continue;
+              }
+              $excluded = '';
+              if (isset($get_exclude_post_types['post_types'][$post_type->name]) && $get_exclude_post_types['post_types'][$post_type->name] == "on") {
+                $excluded = 'checked';
+              }
+			        ?>
+                <tr valign="top">
+                    <td><input type="checkbox" name="<?php echo $post_type->name; ?>" value="on" <?php echo $excluded; ?> /><strong><?php echo $post_type->labels->name; ?></strong>
+                </tr>              
+		        <?php } ?>
+		        </table>
+
+            <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes', 'make-paths-relative'); ?>" /></p>
+		    </form>
+      </div>
+      <?php
   }
 }
