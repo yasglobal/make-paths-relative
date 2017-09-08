@@ -1,19 +1,18 @@
 <?php
-
-/**
- * @package MakePathsRelative\Main
- */
-
 /**
  * Plugin Name: Make Paths Relative
- * Version: 0.4.1
  * Plugin URI: https://wordpress.org/plugins/make-paths-relative/
  * Description: This plugin converts the URL(Links) to relative instead of absolute.
- * Donate link: https://www.paypal.me/yasglobal
+ * Version: 0.4.1
  * Author: YAS Global Team
  * Author URI: https://www.yasglobal.com/web-design-development/wordpress/make-paths-relative/
+ * Donate link: https://www.paypal.me/yasglobal
+ * License: GPLv3
+ *
  * Text Domain: make-paths-relative
- * License: GPL v3
+ * Domain Path: /i18n/languages
+ *
+ * @package MakePathsRelative
  */
 
  /**
