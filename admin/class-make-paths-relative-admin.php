@@ -45,15 +45,15 @@ class Make_Paths_Relative_Admin {
 			);
 			update_option( 'make_paths_relative', serialize( $make_paths_relative_settings ) );
 		}
-		$relative_paths_setting = unserialize( get_option( 'make_paths_relative' ) );
-		$post_permalinks_checked = '';
-		$page_permalinks_checked = '';
-		$archive_permalinks_checked = '';
-		$author_permalinks_checked = '';
+		$relative_paths_setting      = unserialize( get_option( 'make_paths_relative' ) );
+		$post_permalinks_checked     = '';
+		$page_permalinks_checked     = '';
+		$archive_permalinks_checked  = '';
+		$author_permalinks_checked   = '';
 		$category_permalinks_checked = '';
-		$scripts_src_checked = '';
-		$styles_src_checked = '';
-		$image_paths_checked = '';
+		$scripts_src_checked         = '';
+		$styles_src_checked          = '';
+		$image_paths_checked         = '';
 		if ( isset( $relative_paths_setting ) ) {
 			if ( esc_attr( $relative_paths_setting['post_permalinks'] ) == 'on' ) {
 				$post_permalinks_checked = 'checked';
@@ -166,7 +166,7 @@ class Make_Paths_Relative_Admin {
 			}
 			update_option( 'make_paths_relative_exclude', serialize( $exclude_post_types ) );
 		}
-		$post_types = get_post_types( '', 'objects' );
+		$post_types             = get_post_types( '', 'objects' );
 		$get_exclude_post_types = unserialize( get_option( 'make_paths_relative_exclude' ) );
 		?>
 		<div class="wrap">

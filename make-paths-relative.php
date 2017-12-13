@@ -3,7 +3,7 @@
  * Plugin Name: Make Paths Relative
  * Plugin URI: https://wordpress.org/plugins/make-paths-relative/
  * Description: This plugin converts the URL(Links) to relative instead of absolute.
- * Version: 0.5.1
+ * Version: 0.5.2
  * Author: YAS Global Team
  * Author URI: https://www.yasglobal.com/web-design-development/wordpress/make-paths-relative/
  * Donate link: https://www.paypal.me/yasglobal
@@ -47,26 +47,23 @@ if ( ! function_exists( "add_action" ) || ! function_exists( "add_filter" ) ) {
 }
 
 if ( ! defined('MAKE_PATHS_RELATIVE_PLUGIN_VERSION' ) ) {
-	define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.1' );
+	define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.2' );
 }
 
 if ( ! defined( 'MAKE_PATHS_RELATIVE__PLUGIN_DIR' ) ) {
 	define( 'MAKE_PATHS_RELATIVE__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 }
 
-if ( ! is_admin() ) {
-	require_once( MAKE_PATHS_RELATIVE__PLUGIN_DIR . 'frontend/class.make-paths-relative.php' );
-	add_action( 'init', array( 'Make_Paths_Relative', 'init' ) );
-} else {
-	require_once( MAKE_PATHS_RELATIVE__PLUGIN_DIR . 'admin/class.make-paths-relative-admin.php' );
+if ( is_admin() ) {
+	require_once( MAKE_PATHS_RELATIVE__PLUGIN_DIR . 'admin/class-make-paths-relative-admin.php' );
 	add_action( 'init', array( 'Make_Paths_Relative_Admin', 'init' ) );
-
-	require_once( MAKE_PATHS_RELATIVE__PLUGIN_DIR . 'frontend/class.make-paths-relative.php' );
-	add_action( 'init', array( 'Make_Paths_Relative', 'init' ) );
 
 	$plugin = plugin_basename( __FILE__ ); 
 	add_filter( "plugin_action_links_$plugin", 'make_paths_relative_settings_link' );
 }
+
+require_once( MAKE_PATHS_RELATIVE__PLUGIN_DIR . 'frontend/class-make-paths-relative.php' );
+add_action( 'init', array( 'Make_Paths_Relative', 'init' ) );
 
 /**
  * Plugin Settings Page Link on the Plugin Page under the Plugin Name

@@ -1,10 +1,10 @@
 ﻿=== Make Paths Relative ===
 Contributors: sasiddiqui, aliya yasir
 Donate link: https://www.paypal.me/yasglobal
-Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src
+Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,19 +31,19 @@ If you want to exclude some Permalink or src to be relative so, you can use `pat
 Your filter may looks like this (Below filter would make the jquery.js Path to absolute):
 
 `
-function change_path($link) {
-  if( $link == '/wp-includes/js/jquery/jquery.js?ver=1.12.4') {
+function yasglobal_change_path( $link ) {
+  if( $link == '/wp-includes/js/jquery/jquery.js?ver=1.12.4' ) {
     $link = site_url().'/wp-includes/js/jquery/jquery.js?ver=1.12.4';
   }
   return $link;
 }
-add_filter('paths_relative', 'change_path' );
+add_filter('paths_relative', 'yasglobal_change_path' );
 `
 
-If you doesn't want to Make the Paths relative for srcset(Responsive Images) so, just add this line in your theme's funcstion.php
+If you doesn't want to Make the Paths relative for srcset(Responsive Images) so, just add this line in your theme's functions.php
 
 `
-add_filter('srcset_paths_relative', '__return_false');
+add_filter( 'srcset_paths_relative', '__return_false' );
 `
 
 = Make sure to check the settings Page =
@@ -72,13 +72,17 @@ A. Yes, You can exclude the items by using the add_filter (You can find the filt
 
 == Changelog ==
 
+= 0.5.2 =
+  
+  * Fixing Spelling mistake and changing name of class FILE
+
 = 0.5.1 =
   
   * Added Compatibility with Yoast Sitemap
 
 = 0.5 =
   
-  * Added feature to Exlude PostTypes
+  * Added feature to Exclude PostTypes
 
 = 0.4.1 =
 

@@ -21,13 +21,19 @@ If you want to exclude some Permalink or src to be relative so, you can use `pat
 Your filter may looks like this (Below filter would make the jquery.js Path to absolute):
 
 ```
-function change_path($link) {
-  if( $link == '/wp-includes/js/jquery/jquery.js?ver=1.12.4') {
+function yasglobal_change_path( $link ) {
+  if( $link == '/wp-includes/js/jquery/jquery.js?ver=1.12.4' ) {
     $link = site_url().'/wp-includes/js/jquery/jquery.js?ver=1.12.4';
   }
   return $link;
 }
-add_filter('paths_relative', 'change_path' );
+add_filter( 'paths_relative', 'yasglobal_change_path' );
+```
+
+If you doesn't want to Make the Paths relative for srcset(Responsive Images) so, just add this line in your theme's functions.php
+
+```
+add_filter( 'srcset_paths_relative', '__return_false' );
 ```
 
 **Note**: Make sure to check the settings Page.
