@@ -3,7 +3,7 @@
  * Plugin Name: Make Paths Relative
  * Plugin URI: https://wordpress.org/plugins/make-paths-relative/
  * Description: This plugin converts the URL(Links) to relative instead of absolute.
- * Version: 0.5.2
+ * Version: 0.5.3
  * Author: YAS Global Team
  * Author URI: https://www.yasglobal.com/web-design-development/wordpress/make-paths-relative/
  * Donate link: https://www.paypal.me/yasglobal
@@ -17,7 +17,7 @@
 
 /**
  * Make Paths Relative Plugin 
- * Copyright (C) 2016-2017, Sami Ahmed Siddiqui <sami.siddiqui@yasglobal.com>
+ * Copyright (C) 2016-2018, Sami Ahmed Siddiqui <sami.siddiqui@yasglobal.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,38 +46,8 @@ if ( ! function_exists( "add_action" ) || ! function_exists( "add_filter" ) ) {
 	exit();
 }
 
-if ( ! defined('MAKE_PATHS_RELATIVE_PLUGIN_VERSION' ) ) {
-	define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.2' );
+if ( ! defined( 'MAKE_PATHS_RELATIVE_FILE' ) ) {
+	define( 'MAKE_PATHS_RELATIVE_FILE', __FILE__ );
 }
 
-if ( ! defined( 'MAKE_PATHS_RELATIVE__PLUGIN_DIR' ) ) {
-	define( 'MAKE_PATHS_RELATIVE__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-}
-
-if ( is_admin() ) {
-	require_once( MAKE_PATHS_RELATIVE__PLUGIN_DIR . 'admin/class-make-paths-relative-admin.php' );
-	add_action( 'init', array( 'Make_Paths_Relative_Admin', 'init' ) );
-
-	$plugin = plugin_basename( __FILE__ ); 
-	add_filter( "plugin_action_links_$plugin", 'make_paths_relative_settings_link' );
-}
-
-require_once( MAKE_PATHS_RELATIVE__PLUGIN_DIR . 'frontend/class-make-paths-relative.php' );
-add_action( 'init', array( 'Make_Paths_Relative', 'init' ) );
-
-/**
- * Plugin Settings Page Link on the Plugin Page under the Plugin Name
- */
-function make_paths_relative_settings_link( $links ) {
-	$settings_link = '<a href="admin.php?page=make-paths-relative-settings">Settings</a>'; 
-	array_unshift( $links, $settings_link );
-	return $links;
-}
-
-/**
- * Add textdomain hook for translation
- */
-function make_paths_relative_load_plugin_textdomain() {
-	load_plugin_textdomain( 'make-paths-relative', FALSE, basename( dirname( __FILE__ ) ) . '/i18n/languages/' );
-}
-add_action( 'plugins_loaded', 'make_paths_relative_load_plugin_textdomain' );
+require_once( dirname( MAKE_PATHS_RELATIVE_FILE ) . '/make-paths-relative-main.php' );

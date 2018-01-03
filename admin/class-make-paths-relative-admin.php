@@ -5,29 +5,29 @@
 
 class Make_Paths_Relative_Admin {
 
-	private static $initiated = false;
-
 	/**
-	 * Initializes WordPress hooks
+	 * Class constructor.
 	 */
-	public static function init() {
-		if ( ! self::$initiated ) {
-			self::$initiated = true;
-
-			add_action ( 'admin_menu', array( 'Make_Paths_Relative_Admin', 'admin_menu' ) );
-		}
+	public function __construct() {
+		add_action ( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_filter( 'plugin_action_links_' . MAKE_PATHS_RELATIVE_BASENAME,
+			array( $this, 'settings_link' )
+		);
 	}
 
+	/**
+	 * Add Settings Pages in the Dashboard Menu.
+	 */
 	public static function admin_menu() {
-		add_menu_page( 'Make Paths Relative Settings', 'Make Paths Relative', 'administrator', 'make-paths-relative-settings', array( 'Make_Paths_Relative_Admin', 'admin_settings_page' ) );
-		add_submenu_page( 'make-paths-relative-settings', 'Make Paths Relative Settings', 'Settings', 'administrator', 'make-paths-relative-settings', array( 'Make_Paths_Relative_Admin', 'admin_settings_page' ) );
-		add_submenu_page( 'make-paths-relative-settings', 'Exclude Posts', 'Exclude Posts', 'administrator', 'make-paths-relative-exclude-posts', array( 'Make_Paths_Relative_Admin', 'exclude_posts_page' ) );
+		add_menu_page( 'Make Paths Relative Settings', 'Make Paths Relative', 'administrator', 'make-paths-relative-settings', array( $this, 'admin_settings_page' ) );
+		add_submenu_page( 'make-paths-relative-settings', 'Make Paths Relative Settings', 'Settings', 'administrator', 'make-paths-relative-settings', array( $this, 'admin_settings_page' ) );
+		add_submenu_page( 'make-paths-relative-settings', 'Exclude Posts', 'Exclude Posts', 'administrator', 'make-paths-relative-exclude-posts', array( $this, 'exclude_posts_page' ) );
 	}
 
 	/**
 	 * Admin Settings Page by which you can change/choose your settings according to your need.
 	 */
-	public static function admin_settings_page() {
+	public function admin_settings_page() {
 		if ( ! current_user_can( 'administrator' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
@@ -146,7 +146,7 @@ class Make_Paths_Relative_Admin {
 			</form>
 		</div>
 		<?php
-		add_filter( 'admin_footer_text', array( 'Make_Paths_Relative_Admin', 'admin_footer_text' ), 1 );
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
 	}
 
 	/**
@@ -197,7 +197,7 @@ class Make_Paths_Relative_Admin {
 				</form>
 			</div>
 		<?php
-		add_filter( 'admin_footer_text', array( 'Make_Paths_Relative_Admin', 'admin_footer_text' ), 1 );
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
   }
 
 	/**
@@ -207,5 +207,14 @@ class Make_Paths_Relative_Admin {
 		/* translators: %s: five stars */
 		$footer_text = sprintf( __( 'If you like <strong>Make Paths Relative</strong> please leave us a %s rating. A huge thanks in advance!', 'make-paths-relative' ), '<a href="https://wordpress.org/support/plugin/make-paths-relative/reviews?rate=5#new-post" target="_blank" data-rated="' . esc_attr__( 'Thanks :)', 'make-paths-relative' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>' );
 		return $footer_text;
+	}
+
+	/**
+	 * Plugin Settings Page Link on the Plugin Page under the Plugin Name.
+	 */
+	public function settings_link( $links ) {
+		$settings_link = '<a href="admin.php?page=make-paths-relative-settings" title="Settings">Settings</a>';
+		array_unshift( $links, $settings_link );
+		return $links;
 	}
 }

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yasglobal
 Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 0.5.2
+Stable tag: 0.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,13 +37,21 @@ function yasglobal_change_path( $link ) {
   }
   return $link;
 }
-add_filter('paths_relative', 'yasglobal_change_path' );
+add_filter( 'paths_relative', 'yasglobal_change_path' );
 `
 
-If you doesn't want to Make the Paths relative for srcset(Responsive Images) so, just add this line in your theme's functions.php
+If you doesn't want to Make the Paths relative for srcset(Responsive Images)
+so, just add this line in your theme's functions.php.
 
 `
 add_filter( 'srcset_paths_relative', '__return_false' );
+`
+
+If you want to make plugin works and all the paths relative without going to
+check/visit Settings Page so, just add this line in your theme's functions.php.
+
+`
+add_filter( 'make_paths_relative_activate_all', '__return_true' );
 `
 
 = Make sure to check the settings Page =
@@ -71,6 +79,12 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filter in the Description Area).
 
 == Changelog ==
+
+= 0.5.3 =
+  
+  * Enhancements
+    * Added Filter to enable all the settings on plugin activation
+    * Added Uninstall hook to remove the plugin settings
 
 = 0.5.2 =
   

@@ -30,7 +30,15 @@ function yasglobal_change_path( $link ) {
 add_filter( 'paths_relative', 'yasglobal_change_path' );
 ```
 
-If you doesn't want to Make the Paths relative for srcset(Responsive Images) so, just add this line in your theme's functions.php
+If you doesn't want to Make the Paths relative for srcset(Responsive Images)
+so, just add this line in your theme's functions.php
+
+```
+add_filter( 'srcset_paths_relative', '__return_false' );
+```
+
+If you doesn't want to Make the Paths relative for srcset(Responsive Images)
+so, just add this line in your theme's functions.php.
 
 ```
 add_filter( 'srcset_paths_relative', '__return_false' );
