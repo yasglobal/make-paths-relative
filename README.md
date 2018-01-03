@@ -37,11 +37,11 @@ so, just add this line in your theme's functions.php
 add_filter( 'srcset_paths_relative', '__return_false' );
 ```
 
-If you doesn't want to Make the Paths relative for srcset(Responsive Images)
-so, just add this line in your theme's functions.php.
+If you want to make plugin works and all the paths relative without going to
+check/visit Settings Page so, just add this line in your theme's functions.php.
 
 ```
-add_filter( 'srcset_paths_relative', '__return_false' );
+add_filter( 'make_paths_relative_activate_all', '__return_true' );
 ```
 
 **Note**: Make sure to check the settings Page.
