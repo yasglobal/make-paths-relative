@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yasglobal
 Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 0.5.3
+Stable tag: 0.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,7 @@ This plugin can make(convert) the paths(URLs) to relative instead of absolute. T
 
 All the above permalinks and src can be converted to relative instead absolute by using this plugin. You can select the options from the plugin settings page. 
 
-= Filter =
+= Filters =
 
 If you want to exclude some Permalink or src to be relative so, you can use `paths_relative` filter in your theme's functions.php or in your custom plugin.
 
@@ -62,7 +62,6 @@ add_filter( 'make_paths_relative_activate_all', '__return_true' );
 2. Activate the Make Paths Relative plugin through the `Plugins` menu in WordPress.
 3. Configure the plugin by going to the menu `Make Paths Relative` that appears in your admin menu.
 
-
 == Screenshots ==
 
 * You can select the options from the settings page ([here](http://www.example.com/wp-admin/admin.php?page=make-paths-relative-settings)). 
@@ -79,6 +78,10 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filter in the Description Area).
 
 == Changelog ==
+
+= 0.5.4 =
+
+  * Fixed PHP Notice
 
 = 0.5.3 =
   

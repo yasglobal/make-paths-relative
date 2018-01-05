@@ -9,13 +9,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( "add_action" ) || ! function_exists( "add_filter" ) ) {
+if ( ! function_exists( 'add_action' ) || ! function_exists( 'add_filter' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit();
 }
 
-define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.3' );
+define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.4' );
 
 if ( ! defined( 'MAKE_PATHS_RELATIVE_PATH' ) ) {
 	define( 'MAKE_PATHS_RELATIVE_PATH', plugin_dir_path( MAKE_PATHS_RELATIVE_FILE ) );
@@ -38,6 +38,7 @@ new Make_Paths_Relative();
 function make_paths_relative_plugin_activate() {
 	if ( apply_filters( 'make_paths_relative_activate_all', '__false' ) == 1 ) {
 		$default_activate =  array(
+			'site_url'             =>  '',
 			'post_permalinks'      =>  'on',
 			'page_permalinks'      =>  'on',
 			'archive_permalinks'   =>  'on',

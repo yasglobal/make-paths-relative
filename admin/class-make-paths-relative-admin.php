@@ -46,6 +46,7 @@ class Make_Paths_Relative_Admin {
 			update_option( 'make_paths_relative', serialize( $make_paths_relative_settings ) );
 		}
 		$relative_paths_setting      = unserialize( get_option( 'make_paths_relative' ) );
+		$site_url                    = '';  
 		$post_permalinks_checked     = '';
 		$page_permalinks_checked     = '';
 		$archive_permalinks_checked  = '';
@@ -55,6 +56,10 @@ class Make_Paths_Relative_Admin {
 		$styles_src_checked          = '';
 		$image_paths_checked         = '';
 		if ( isset( $relative_paths_setting ) ) {
+			if ( isset( $relative_paths_setting['site_url'] )
+				&& ! empty( $relative_paths_setting['site_url'] ) ) {
+				$site_url = $relative_paths_setting['site_url'];
+			}
 			if ( esc_attr( $relative_paths_setting['post_permalinks'] ) == 'on' ) {
 				$post_permalinks_checked = 'checked';
 			}
@@ -94,7 +99,7 @@ class Make_Paths_Relative_Admin {
 					<tbody>
 						<tr>
 							<th><label for="name"><?php _e( 'Site Address :', 'make-paths-relative' ); ?></label></th>
-							<td><input type="text" name="site_url" class="regular-text" value="<?php echo $relative_paths_setting['site_url']; ?>" /><small><?php printf( __( 'Default : %s', 'make-paths-relative' ), $print_site_url); ?></small>
+							<td><input type="text" name="site_url" class="regular-text" value="<?php echo $site_url; ?>" /><small><?php printf( __( 'Default : %s', 'make-paths-relative' ), $print_site_url); ?></small>
 							<div><?php printf( __( 'Leave the field empty to use the <strong>%s</strong> address', 'make-paths-relative' ), $print_site_url ); ?></div></td>
 						</tr>
 					</tbody>
