@@ -18,10 +18,19 @@ class Make_Paths_Relative_Admin {
 	/**
 	 * Add Settings Pages in the Dashboard Menu.
 	 */
-	public static function admin_menu() {
-		add_menu_page( 'Make Paths Relative Settings', 'Make Paths Relative', 'administrator', 'make-paths-relative-settings', array( $this, 'admin_settings_page' ) );
-		add_submenu_page( 'make-paths-relative-settings', 'Make Paths Relative Settings', 'Settings', 'administrator', 'make-paths-relative-settings', array( $this, 'admin_settings_page' ) );
-		add_submenu_page( 'make-paths-relative-settings', 'Exclude Posts', 'Exclude Posts', 'administrator', 'make-paths-relative-exclude-posts', array( $this, 'exclude_posts_page' ) );
+	public function admin_menu() {
+		add_menu_page( 'Make Paths Relative Settings', 'Make Paths Relative',
+			'administrator', 'make-paths-relative-settings',
+			array( $this, 'admin_settings_page' )
+		);
+		add_submenu_page( 'make-paths-relative-settings',
+			'Make Paths Relative Settings', 'Settings', 'administrator',
+			'make-paths-relative-settings', array( $this, 'admin_settings_page' )
+		);
+		add_submenu_page( 'make-paths-relative-settings', 'Exclude Posts',
+			'Exclude Posts', 'administrator', 'make-paths-relative-exclude-posts',
+			array( $this, 'exclude_posts_page' )
+		);
 	}
 
 	/**
@@ -32,7 +41,7 @@ class Make_Paths_Relative_Admin {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		if ( isset( $_POST['submit'] ) ) {
-			$make_paths_relative_settings =  array(
+			$save_settings =  array(
 				'site_url'             =>  $_POST['site_url'],
 				'post_permalinks'      =>  $_POST['post_permalinks'],
 				'page_permalinks'      =>  $_POST['page_permalinks'],
@@ -43,50 +52,52 @@ class Make_Paths_Relative_Admin {
 				'styles_src'           =>  $_POST['styles_src'],
 				'image_paths'          =>  $_POST['image_paths']
 			);
-			update_option( 'make_paths_relative', serialize( $make_paths_relative_settings ) );
+			update_option( 'make_paths_relative', serialize( $save_settings ) );
 		}
-		$relative_paths_setting      = unserialize( get_option( 'make_paths_relative' ) );
-		$site_url                    = '';  
-		$post_permalinks_checked     = '';
-		$page_permalinks_checked     = '';
-		$archive_permalinks_checked  = '';
-		$author_permalinks_checked   = '';
-		$category_permalinks_checked = '';
-		$scripts_src_checked         = '';
-		$styles_src_checked          = '';
-		$image_paths_checked         = '';
-		if ( isset( $relative_paths_setting ) ) {
-			if ( isset( $relative_paths_setting['site_url'] )
-				&& ! empty( $relative_paths_setting['site_url'] ) ) {
-				$site_url = $relative_paths_setting['site_url'];
+		$settings         = unserialize( get_option( 'make_paths_relative' ) );
+		$site_url         = '';  
+		$enabled_post     = '';
+		$enabled_page     = '';
+		$enabled_archive  = '';
+		$enabled_author   = '';
+		$enabled_category = '';
+		$enabled_script   = '';
+		$enabled_style    = '';
+		$enabled_image    = '';
+		if ( isset( $settings ) ) {
+			if ( isset( $settings['site_url'] )
+				&& ! empty( $settings['site_url'] ) ) {
+				$site_url = $settings['site_url'];
 			}
-			if ( esc_attr( $relative_paths_setting['post_permalinks'] ) == 'on' ) {
-				$post_permalinks_checked = 'checked';
+			if ( esc_attr( $settings['post_permalinks'] ) == 'on' ) {
+				$enabled_post = 'checked';
 			}
-			if ( isset( $relative_paths_setting['page_permalinks'] )
-				&& esc_attr( $relative_paths_setting['page_permalinks'] ) == 'on' ) {
-				$page_permalinks_checked = 'checked';
+			if ( isset( $settings['page_permalinks'] )
+				&& esc_attr( $settings['page_permalinks'] ) == 'on' ) {
+				$enabled_page = 'checked';
 			}
-			if ( esc_attr( $relative_paths_setting['archive_permalinks'] ) == 'on' ) {
-				$archive_permalinks_checked = 'checked';
+			if ( esc_attr( $settings['archive_permalinks'] ) == 'on' ) {
+				$enabled_archive = 'checked';
 			}
-			if ( esc_attr( $relative_paths_setting['author_permalinks'] ) == 'on' ) {
-				$author_permalinks_checked = 'checked';
+			if ( esc_attr( $settings['author_permalinks'] ) == 'on' ) {
+				$enabled_author = 'checked';
 			}
-			if ( esc_attr( $relative_paths_setting['category_permalinks'] ) == 'on' ) {
-				$category_permalinks_checked = 'checked';
+			if ( esc_attr( $settings['category_permalinks'] ) == 'on' ) {
+				$enabled_category = 'checked';
 			}
-			if ( esc_attr( $relative_paths_setting['scripts_src'] ) == 'on' ) {
-				$scripts_src_checked = 'checked';
+			if ( esc_attr( $settings['scripts_src'] ) == 'on' ) {
+				$enabled_script = 'checked';
 			}
-			if ( esc_attr( $relative_paths_setting['styles_src'] ) == 'on' ) {
-				$styles_src_checked = 'checked';
+			if ( esc_attr( $settings['styles_src'] ) == 'on' ) {
+				$enabled_style = 'checked';
 			}
-			if ( esc_attr( $relative_paths_setting['image_paths'] ) == 'on' ) {
-				$image_paths_checked = 'checked';
+			if ( esc_attr( $settings['image_paths'] ) == 'on' ) {
+				$enabled_image = 'checked';
 			}
 		}
-		wp_enqueue_style( 'style', plugins_url( '/css/admin-style.min.css', __FILE__ ) );
+		wp_enqueue_style( 'style', 
+			plugins_url( '/admin/css/admin-style.min.css', MAKE_PATHS_RELATIVE_FILE )
+		);
 		$print_site_url = 'site_url()';
 		?>
 		<div class="wrap">
@@ -109,19 +120,19 @@ class Make_Paths_Relative_Admin {
 					<caption><?php _e( 'Make Permalinks Relative', 'make-paths-relative' ); ?></caption>
 					<tbody>
 						<tr>
-							<td><input type="checkbox" name="post_permalinks" value="on" <?php echo $post_permalinks_checked; ?> /><strong><?php _e( 'Post Permalinks', 'make-paths-relative' ); ?></strong></td>
+							<td><input type="checkbox" name="post_permalinks" value="on" <?php echo $enabled_post; ?> /><strong><?php _e( 'Post Permalinks', 'make-paths-relative' ); ?></strong></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="page_permalinks" value="on" <?php echo $page_permalinks_checked; ?> /><strong><?php _e('Page Permalinks', 'make-paths-relative'); ?></strong></td>
+							<td><input type="checkbox" name="page_permalinks" value="on" <?php echo $enabled_page; ?> /><strong><?php _e('Page Permalinks', 'make-paths-relative'); ?></strong></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="archive_permalinks" value="on" <?php echo $archive_permalinks_checked; ?> /><strong><?php _e( 'Archive Permalinks', 'make-paths-relative' ); ?></strong></td>
+							<td><input type="checkbox" name="archive_permalinks" value="on" <?php echo $enabled_archive; ?> /><strong><?php _e( 'Archive Permalinks', 'make-paths-relative' ); ?></strong></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="author_permalinks" value="on" <?php echo $author_permalinks_checked; ?> /><strong><?php _e( 'Author Permalinks', 'make-paths-relative' ); ?></strong></td>
+							<td><input type="checkbox" name="author_permalinks" value="on" <?php echo $enabled_author; ?> /><strong><?php _e( 'Author Permalinks', 'make-paths-relative' ); ?></strong></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="category_permalinks" value="on" <?php echo $category_permalinks_checked; ?> /><strong><?php _e( 'Category Permalink', 'make-paths-relative' ); ?></strong></td>
+							<td><input type="checkbox" name="category_permalinks" value="on" <?php echo $enabled_category; ?> /><strong><?php _e( 'Category Permalink', 'make-paths-relative' ); ?></strong></td>
 						</tr>
 					</tbody>
 				</table>
@@ -130,10 +141,10 @@ class Make_Paths_Relative_Admin {
 					<caption><?php _e( 'Make Scripts and Styles Relative', 'make-paths-relative' ); ?></caption>
 					<tbody>
 						<tr>
-							<td><input type="checkbox" name="scripts_src" value="on" <?php echo $scripts_src_checked; ?> /><strong><?php _e( 'Scripts src', 'make-paths-relative' ); ?></strong></td>
+							<td><input type="checkbox" name="scripts_src" value="on" <?php echo $enabled_script; ?> /><strong><?php _e( 'Scripts src', 'make-paths-relative' ); ?></strong></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="styles_src" value="on" <?php echo $styles_src_checked; ?> /><strong><?php _e( 'Styles src', 'make-paths-relative' ); ?></strong></td>
+							<td><input type="checkbox" name="styles_src" value="on" <?php echo $enabled_style; ?> /><strong><?php _e( 'Styles src', 'make-paths-relative' ); ?></strong></td>
 						</tr>
 					</tbody>
 				</table>
@@ -142,7 +153,7 @@ class Make_Paths_Relative_Admin {
 					<caption><?php _e( 'Make Image Paths Relative', 'make-paths-relative' ); ?></caption>
 					<tbody>
 						<tr>
-							<td><input type="checkbox" name="image_paths" value="on" <?php echo $image_paths_checked; ?> /><strong><?php _e( 'Image Paths', 'make-paths-relative' ); ?></strong></td>
+							<td><input type="checkbox" name="image_paths" value="on" <?php echo $enabled_image; ?> /><strong><?php _e( 'Image Paths', 'make-paths-relative' ); ?></strong></td>
 						</tr>
 					</tbody>
 				</table>
@@ -169,10 +180,12 @@ class Make_Paths_Relative_Admin {
 				}
 				$exclude_post_types['post_types'][$key] = $value;
 			}
-			update_option( 'make_paths_relative_exclude', serialize( $exclude_post_types ) );
+			update_option( 'make_paths_relative_exclude',
+				serialize( $exclude_post_types )
+			);
 		}
-		$post_types             = get_post_types( '', 'objects' );
-		$get_exclude_post_types = unserialize( get_option( 'make_paths_relative_exclude' ) );
+		$post_types     = get_post_types( '', 'objects' );
+		$excluded_types = unserialize( get_option( 'make_paths_relative_exclude' ) );
 		?>
 		<div class="wrap">
 				<h1><?php _e( 'Exclude Posts', 'make-paths-relative' ); ?></h1>
@@ -183,12 +196,13 @@ class Make_Paths_Relative_Admin {
 						<table class="form-table">
 						<?php $get_post_type = array(); ?>
 						<?php foreach ( $post_types as $post_type ) {
-							if ( $post_type->name == 'revision' || $post_type->name == 'nav_menu_item' ) {
+							if ( $post_type->name == 'revision'
+								|| $post_type->name == 'nav_menu_item' ) {
 								continue;
 							}
 							$excluded = '';
-							if ( isset( $get_exclude_post_types['post_types'][$post_type->name] )
-								&& $get_exclude_post_types['post_types'][$post_type->name] == "on" ) {
+							if ( isset( $excluded_types['post_types'][$post_type->name] )
+								&& $excluded_types['post_types'][$post_type->name] == "on" ) {
 								$excluded = 'checked';
 							}
 							?>
