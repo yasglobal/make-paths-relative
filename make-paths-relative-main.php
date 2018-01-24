@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_action' ) || ! function_exists( 'add_filter' ) ) {
 	exit();
 }
 
-define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.5' );
+define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.6' );
 
 if ( ! defined( 'MAKE_PATHS_RELATIVE_PATH' ) ) {
 	define( 'MAKE_PATHS_RELATIVE_PATH', plugin_dir_path( MAKE_PATHS_RELATIVE_FILE ) );
@@ -35,6 +35,9 @@ if ( is_admin() ) {
 require_once( MAKE_PATHS_RELATIVE_PATH . 'frontend/class-make-paths-relative.php' );
 new Make_Paths_Relative();
 
+/**
+ * Default Settings when the plugin has activated using filter.
+ */
 function make_paths_relative_plugin_activate() {
 	if ( apply_filters( 'make_paths_relative_activate_all', '__false' ) == 1 ) {
 		$default_activate =  array(
@@ -59,10 +62,13 @@ function make_paths_relative_plugin_uninstall() {
 	delete_option( 'make_paths_relative' );
 	delete_option( 'make_paths_relative_exclude' );
 }
+
 /**
  * Add textdomain hook for translation
  */
 function make_paths_relative_load_plugin_textdomain() {
-	load_plugin_textdomain( 'make-paths-relative', FALSE, MAKE_PATHS_RELATIVE_BASENAME . '/i18n/languages/' );
+	load_plugin_textdomain( 'make-paths-relative', FALSE,
+		basename( dirname( MAKE_PATHS_RELATIVE_FILE ) ) . '/languages/'
+	);
 }
 add_action( 'plugins_loaded', 'make_paths_relative_load_plugin_textdomain' );

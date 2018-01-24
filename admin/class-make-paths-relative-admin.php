@@ -31,6 +31,10 @@ class Make_Paths_Relative_Admin {
 			'Exclude Posts', 'administrator', 'make-paths-relative-exclude-posts',
 			array( $this, 'exclude_posts_page' )
 		);
+		add_submenu_page( 'make-paths-relative-settings', 'About',
+			'About', 'administrator', 'make-paths-relative-about-plugins',
+			array( $this, 'about_plugin' )
+		);
 	}
 
 	/**
@@ -41,6 +45,30 @@ class Make_Paths_Relative_Admin {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		if ( isset( $_POST['submit'] ) ) {
+			if ( ! isset( $_POST['post_permalinks'] ) ) {
+				$_POST['post_permalinks'] = '';
+			}
+			if ( ! isset( $_POST['page_permalinks'] ) ) {
+				$_POST['page_permalinks'] = '';
+			}
+			if ( ! isset( $_POST['archive_permalinks'] ) ) {
+				$_POST['archive_permalinks'] = '';
+			}
+			if ( ! isset( $_POST['author_permalinks'] ) ) {
+				$_POST['author_permalinks'] = '';
+			}
+			if ( ! isset( $_POST['category_permalinks'] ) ) {
+				$_POST['category_permalinks'] = '';
+			}
+			if ( ! isset( $_POST['scripts_src'] ) ) {
+				$_POST['scripts_src'] = '';
+			}
+			if ( ! isset( $_POST['styles_src'] ) ) {
+				$_POST['styles_src'] = '';
+			}
+			if ( ! isset( $_POST['image_paths'] ) ) {
+				$_POST['image_paths'] = '';
+			}
 			$save_settings =  array(
 				'site_url'             =>  $_POST['site_url'],
 				'post_permalinks'      =>  $_POST['post_permalinks'],
@@ -220,20 +248,47 @@ class Make_Paths_Relative_Admin {
   }
 
 	/**
-	 * Add Rating Message in the footer of Admin Pages of Make Paths Relative
+	 * Add About Plugins Page
 	 */
-	public function admin_footer_text() {
-		/* translators: %s: five stars */
-		$footer_text = sprintf( __( 'If you like <strong>Make Paths Relative</strong> please leave us a %s rating. A huge thanks in advance!', 'make-paths-relative' ), '<a href="https://wordpress.org/support/plugin/make-paths-relative/reviews?rate=5#new-post" target="_blank" data-rated="' . esc_attr__( 'Thanks :)', 'make-paths-relative' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>' );
-		return $footer_text;
+	public function about_plugin() {
+		require_once(
+			MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-about.php'
+		);
+		new Make_Paths_Relative_About();		
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
 	}
 
 	/**
-	 * Plugin Settings Page Link on the Plugin Page under the Plugin Name.
+	 * Add Plugin Support and Follow Message in the footer of Admin Pages
+	 */
+	public function admin_footer_text() {
+		$footer_text = sprintf(
+			__( 'Make Paths Relative version %s by <a href="%s" title="YAS Global Website" target="_blank">YAS Global</a> - <a href="%s" title="Support forums" target="_blank">Support forums</a> - Follow on Twitter: <a href="%s" title="Follow YAS Global on Twitter" target="_blank">YAS Global</a>', 'make-paths-relative' ),
+			MAKE_PATHS_RELATIVE_PLUGIN_VERSION, 'https://www.yasglobal.com',
+			'https://wordpress.org/support/plugin/make-paths-relative',
+			'https://twitter.com/samisiddiqui91'
+		);
+		return $footer_text;
+	
+	}
+
+	/**
+	 * Plugin About and Settings Page Link on the Plugin Page under
+	 * the Plugin Name.
 	 */
 	public function settings_link( $links ) {
-		$settings_link = '<a href="admin.php?page=make-paths-relative-settings" title="Settings">Settings</a>';
+
+		$about = sprintf(
+			__( '<a href="%s" title="About">About</a>', 'make-paths-relative' ),
+			'admin.php?page=make-paths-relative-about-plugins'
+		);
+		$settings_link = sprintf(
+			__( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
+			'admin.php?page=make-paths-relative-settings'
+		);
 		array_unshift( $links, $settings_link );
+		array_unshift( $links, $about );
+
 		return $links;
 	}
 }

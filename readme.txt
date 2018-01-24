@@ -4,11 +4,11 @@ Donate link: https://www.paypal.me/yasglobal
 Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 0.5.5
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 0.5.6
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Make(convert) the absolute URLs(paths) to relative.
+Convert Absolute URLs to be relative in your finger step.
 
 == Description ==
 
@@ -56,11 +56,37 @@ add_filter( 'make_paths_relative_activate_all', '__return_true' );
 
 = Make sure to check the settings Page =
 
+=== Thanks for the Support ===
+
+The support from the users that love Make Paths Relative is huge. You can support Make Paths Relative future development and help to make it even better by donating or even giving a 5 star rating with a nice message to me :)
+
+[Donate to Make Paths Relative](https://www.paypal.me/yasglobal)
+
+=== Bug reports ===
+
+Bug reports for Make Paths Relative are [welcomed on GitHub](https://github.com/yasglobal/make-paths-relative). Please note GitHub is not a support forum, and issues that aren't properly qualified as bugs will be closed.
+
 == Installation ==
 
-1. Upload the `make-paths-relative` folder to the `/wp-content/plugins/` directory or Directly install the plugin through the WordPress plugins screen.
-2. Activate the Make Paths Relative plugin through the `Plugins` menu in WordPress.
-3. Configure the plugin by going to the menu `Make Paths Relative` that appears in your admin menu.
+This process defines you the steps to follow either you are installing through WordPress or Manually from FTP.
+
+**From within WordPress**
+
+1. Visit 'Plugins > Add New'
+2. Search for Make Paths Relative
+3. Activate Make Paths Relative from your Plugins page.
+4. Go to "after activation" below.
+
+**Manually**
+
+1. Upload the `make-paths-relative` folder to the `/wp-content/plugins/` directory
+2. Activate Make Paths Relative through the 'Plugins' menu in WordPress
+3. Go to "after activation" below.
+
+**After activation**
+
+1. Go to the plugin settings page and set up the plugin for your site.
+2. You're done!
 
 == Screenshots ==
 
@@ -78,6 +104,10 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filter in the Description Area).
 
 == Changelog ==
+
+= 0.5.6 =
+
+  * Fixed PHP Notices on saving settings
 
 = 0.5.5 =
 

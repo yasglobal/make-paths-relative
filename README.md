@@ -46,11 +46,33 @@ add_filter( 'make_paths_relative_activate_all', '__return_true' );
 
 **Note**: Make sure to check the settings Page.
 
-## Installation 
+### Thanks for the Support
 
-* Upload the `make-paths-relative` folder to the `/wp-content/plugins/` directory or Directly install the plugin through the WordPress plugins screen.
-* Activate the Make Paths Relative plugin through the `Plugins` menu in WordPress.
-* Configure the plugin by going to the menu `Make Paths Relative` that appears in your admin menu.
+The support from the users that love Make Paths Relative is huge. You can support Make Paths Relative future development and help to make it even better by donating or even giving a 5 star rating with a nice message to me :)
+
+[Donate to Make Paths Relative](https://www.paypal.me/yasglobal)
+
+## Installation
+
+This process defines you the steps to follow either you are installing through WordPress or Manually from FTP.
+
+### From within WordPress
+
+1. Visit 'Plugins > Add New'
+2. Search for Make Paths Relative
+3. Activate Make Paths Relative from your Plugins page.
+4. Go to "after activation" below.
+
+### Manually
+
+1. Upload the `make-paths-relative` folder to the `/wp-content/plugins/` directory
+2. Activate Make Paths Relative through the 'Plugins' menu in WordPress
+3. Go to "after activation" below.
+
+### After activation
+
+1. Go to the plugin settings page and set up the plugin for your site.
+2. You're done!
 
 ## Frequently Asked Questions 
 

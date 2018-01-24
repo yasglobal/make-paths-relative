@@ -1,0 +1,126 @@
+# Translation of Plugins - Make Paths Relative - Stable (latest release) in English (Canada)
+# This file is distributed under the same license as the Plugins - Make Paths Relative - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2017-10-11 20:09:59+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: en_CA\n"
+"Project-Id-Version: Plugins - Make Paths Relative - Stable (latest release)\n"
+
+#: admin/class-make-paths-relative-admin.php:227
+msgid "Thanks :)"
+msgstr "Thanks :)"
+
+#. translators: %s: five stars
+#: admin/class-make-paths-relative-admin.php:227
+msgid "If you like <strong>Make Paths Relative</strong> please leave us a %s rating. A huge thanks in advance!"
+msgstr "If you like <strong>Make Paths Relative</strong> please leave us a %s rating. A huge thanks in advance!"
+
+#: admin/class-make-paths-relative-admin.php:126
+msgid "Page Permalinks"
+msgstr "Page Permalinks"
+
+#: admin/class-make-paths-relative-admin.php:193
+msgid "Select the PostTypes to exclude it."
+msgstr "Select the PostTypes to exclude it."
+
+#: admin/class-make-paths-relative-admin.php:191
+msgid "Exclude Posts"
+msgstr "Exclude Posts"
+
+#. Author URI of the plugin/theme
+msgid "https://www.yasglobal.com/web-design-development/wordpress/make-paths-relative/"
+msgstr "https://www.yasglobal.com/web-design-development/wordpress/make-paths-relative/"
+
+#. Author of the plugin/theme
+msgid "YAS Global Team"
+msgstr "YAS Global Team"
+
+#. Description of the plugin/theme
+msgid "This plugin converts the URL(Links) to relative instead of absolute."
+msgstr "This plugin converts the URL(Links) to relative instead of absolute."
+
+#. Plugin URI of the plugin/theme
+msgid "https://wordpress.org/plugins/make-paths-relative/"
+msgstr "https://wordpress.org/plugins/make-paths-relative/"
+
+#: admin/class-make-paths-relative-admin.php:161
+#: admin/class-make-paths-relative-admin.php:215
+msgid "Save Changes"
+msgstr "Save Changes"
+
+#: admin/class-make-paths-relative-admin.php:156
+msgid "Image Paths"
+msgstr "Image Paths"
+
+#: admin/class-make-paths-relative-admin.php:153
+msgid "Make Image Paths Relative"
+msgstr "Make Image Paths Relative"
+
+#: admin/class-make-paths-relative-admin.php:147
+msgid "Styles src"
+msgstr "Styles src"
+
+#: admin/class-make-paths-relative-admin.php:144
+msgid "Scripts src"
+msgstr "Scripts src"
+
+#: admin/class-make-paths-relative-admin.php:141
+msgid "Make Scripts and Styles Relative"
+msgstr "Make Scripts and Styles Relative"
+
+#: admin/class-make-paths-relative-admin.php:135
+msgid "Category Permalink"
+msgstr "Category Permalink"
+
+#: admin/class-make-paths-relative-admin.php:132
+msgid "Author Permalinks"
+msgstr "Author Permalinks"
+
+#: admin/class-make-paths-relative-admin.php:129
+msgid "Archive Permalinks"
+msgstr "Archive Permalinks"
+
+#: admin/class-make-paths-relative-admin.php:123
+msgid "Post Permalinks"
+msgstr "Post Permalinks"
+
+#: admin/class-make-paths-relative-admin.php:120
+msgid "Make Permalinks Relative"
+msgstr "Make Permalinks Relative"
+
+#: admin/class-make-paths-relative-admin.php:114
+msgid "Leave the field empty to use the <strong>%s</strong> address"
+msgstr "Leave the field empty to use the <strong>%s</strong> address"
+
+#: admin/class-make-paths-relative-admin.php:113
+msgid "Default : %s"
+msgstr "Default : %s"
+
+#: admin/class-make-paths-relative-admin.php:112
+msgid "Site Address :"
+msgstr "Site Address :"
+
+#: admin/class-make-paths-relative-admin.php:109
+msgid "Define Site Address"
+msgstr "Define Site Address"
+
+#: admin/class-make-paths-relative-admin.php:105
+msgid "Select which paths you want to make relative."
+msgstr "Select which paths you want to make relative."
+
+#. #-#-#-#-#  make-paths-relative-code.pot (Make Paths Relative 0.5.5) 
+#. #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: admin/class-make-paths-relative-admin.php:104
+msgid "Make Paths Relative"
+msgstr "Make Paths Relative"
+
+#: admin/class-make-paths-relative-admin.php:41
+#: admin/class-make-paths-relative-admin.php:173
+msgid "You do not have sufficient permissions to access this page."
+msgstr "You do not have sufficient permissions to access this page."
