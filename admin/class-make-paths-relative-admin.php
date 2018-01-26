@@ -273,7 +273,7 @@ class Make_Paths_Relative_Admin {
 	}
 
 	/**
-	 * Plugin About and Settings Page Link on the Plugin Page under
+	 * Plugin About, Contact and Settings Link on the Plugin Page under
 	 * the Plugin Name.
 	 */
 	public function settings_link( $links ) {
@@ -282,11 +282,16 @@ class Make_Paths_Relative_Admin {
 			__( '<a href="%s" title="About">About</a>', 'make-paths-relative' ),
 			'admin.php?page=make-paths-relative-about-plugins'
 		);
+		$contact = sprintf(
+			__( '<a href="%s" title="Contact">Contact</a>', 'make-paths-relative' ),
+			'https://www.yasglobal.com/#request-form'
+		);
 		$settings_link = sprintf(
 			__( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
 			'admin.php?page=make-paths-relative-settings'
 		);
 		array_unshift( $links, $settings_link );
+		array_unshift( $links, $contact );
 		array_unshift( $links, $about );
 
 		return $links;

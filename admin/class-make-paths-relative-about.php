@@ -66,9 +66,9 @@ class Make_Paths_Relative_About {
 						<img src= "<?php echo $img_src; ?>/custom-permalinks.svg" />
 					</div>
 
-					<h3><?php _e( 'Custom Permalinks', 'schema-for-article' ); ?></h3>
-					<p><?php _e( 'Custom Permalinks helps you to make your permalinks customized for <em>individual</em> posts, pages, tags or categories. It will <strong>NOT</strong> apply whole permalink structures, or automatically apply a category\'s custom permalink to the posts within that category.', 'schema-for-article' ); ?></p>
-					<a href="https://wordpress.org/plugins/custom-permalinks/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
+					<h3><?php _e( 'Custom Permalinks', 'make-paths-relative' ); ?></h3>
+					<p><?php _e( 'Custom Permalinks helps you to make your permalinks customized for <em>individual</em> posts, pages, tags or categories. It will <strong>NOT</strong> apply whole permalink structures, or automatically apply a category\'s custom permalink to the posts within that category.', 'make-paths-relative' ); ?></p>
+					<a href="https://www.custompermalinks.com/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
 				</div>
 
 				<div class="box">
@@ -96,8 +96,8 @@ class Make_Paths_Relative_About {
 						<img src= "<?php echo $img_src; ?>/schema-for-article.svg" />
 					</div>
 
-					<h3><?php _e( 'SCHEMA for Article', 'schema-for-article' ); ?></h3>
-					<p><?php _e( 'Simply the easiest solution to add valid schema.org as a JSON script in the head of blog posts or articles. You can choose the schema either to show with the type of Article or NewsArticle from the settings page.', 'schema-for-article' ); ?></p>
+					<h3><?php _e( 'SCHEMA for Article', 'make-paths-relative' ); ?></h3>
+					<p><?php _e( 'Simply the easiest solution to add valid schema.org as a JSON script in the head of blog posts or articles. You can choose the schema either to show with the type of Article or NewsArticle from the settings page.', 'make-paths-relative' ); ?></p>
 					<a href="https://wordpress.org/plugins/schema-for-article/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
 				</div>
 
@@ -106,8 +106,8 @@ class Make_Paths_Relative_About {
 						<img src= "<?php echo $img_src; ?>/http-auth.svg" />
 					</div>
 
-					<h3><?php _e( 'Http Auth', 'schema-for-article' ); ?></h3>
-					<p><?php _e( 'Allows you apply <strong>HTTP Auth</strong> on your site. You can apply Http Authentication all over the site or only the admin pages. It helps to stop cralwing on your site while on development or persist the <strong>Brute Attacks</strong> by locking the Admin Pages.', 'schema-for-article' ); ?></p>
+					<h3><?php _e( 'HTTP Auth', 'make-paths-relative' ); ?></h3>
+					<p><?php _e( 'Allows you apply <strong>HTTP Auth</strong> on your site. You can apply HTTP Authentication all over the site or only the admin pages. It helps to stop cralwing on your site while on development or persist the <strong>Brute Attacks</strong> by locking the Admin Pages.', 'make-paths-relative' ); ?></p>
 					<a href="https://wordpress.org/plugins/http-auth/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
 				</div>
 

@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_action' ) || ! function_exists( 'add_filter' ) ) {
 	exit();
 }
 
-define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.6' );
+define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '0.5.7' );
 
 if ( ! defined( 'MAKE_PATHS_RELATIVE_PATH' ) ) {
 	define( 'MAKE_PATHS_RELATIVE_PATH', plugin_dir_path( MAKE_PATHS_RELATIVE_FILE ) );
