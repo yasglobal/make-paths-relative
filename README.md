@@ -14,7 +14,7 @@ This plugin can make(convert) the paths(URLs) to relative instead of absolute. T
 
 All the above permalinks and src can be converted to relative instead absolute by using this plugin. You can select the options from the plugin settings page. 
 
-### Filter
+### Filters
 
 If you want to exclude some Permalink or src to be relative so, you can use `paths_relative` filter in your theme's functions.php or in your custom plugin.
 
@@ -86,4 +86,4 @@ A. Yes, You can select the items you want to be relative.
 
 **Q. May i exclude some items to be shown as absolute?** 
 
-A. Yes, You can exclude the items by using the add_filter (You can find the filter in the Description Area).
+A. Yes, You can exclude the items by using the add_filter (You can find the filters in the [Description Area](https://github.com/yasglobal/make-paths-relative#filters)).

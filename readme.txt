@@ -1,14 +1,14 @@
-﻿=== Make Paths Relative ===
+=== Make Paths Relative ===
 Contributors: sasiddiqui, aliya yasir
 Donate link: https://www.paypal.me/yasglobal
-Tags: URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
+Tags: GDPR, URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 0.5.7
+Stable tag: 0.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Convert Absolute URLs to be relative in your finger step.
+Convert Absolute URLs to be relative in your fingertip.
 
 == Description ==
 
@@ -101,64 +101,19 @@ A. Installing this plugin is the easiest way to make the paths(Permalinks + src)
 A. Yes, You can select the items you want to be relative.
 
 = Q. May i exclude some items to be shown as absolute? = 
-A. Yes, You can exclude the items by using the add_filter (You can find the filter in the Description Area).
+A. Yes, You can exclude the items by using the add_filter (You can find the filters in the [Description Area](https://wordpress.org/plugins/make-paths-relative/#description-header) ).
 
 == Changelog ==
 
-= 0.5.7 =
+= 0.6 - May 25, 2018 =
+
+  * Enhancements
+    * Added Privacy Policy Section which will be shown in Admin Dashboard for
+      WordPress 4.9.6 or higher
+
+  * Bug
+    * Fixed redirect issue for media when it is attached to post.
+
+= 0.5.7 - Jan 26, 2018 =
 
   * Update text domain on about page
-
-= 0.5.6 =
-
-  * Fixed PHP Notices on saving settings
-
-= 0.5.5 =
-
-  * Changes related to Settings Pages
-
-= 0.5.4 =
-
-  * Fixed PHP Notice
-
-= 0.5.3 =
-  
-  * Enhancements
-    * Added Filter to enable all the settings on plugin activation
-    * Added Uninstall hook to remove the plugin settings
-
-= 0.5.2 =
-  
-  * Fixing Spelling mistake and changing name of class FILE
-
-= 0.5.1 =
-  
-  * Added Compatibility with Yoast Sitemap
-
-= 0.5 =
-  
-  * Added feature to Exclude PostTypes
-
-= 0.4.1 =
-
-  * Fixed Responsive images issue
-
-= 0.4 =
-
-  * Fixed Protocol Issue and `//` startings URLs
-
-= 0.3 =
-
-  * Make the Paths Relative of srcset(Responsive Images)
-
-= 0.2.1 =
-
-  * Added Capability to make the Paths relative on Admin Dashboard 
-
-= 0.2 =
-
-  * Optimized the Plugin to provide the better performance and added the filter
-
-= 0.1 =
-
-  * First release on wordpress.org.
