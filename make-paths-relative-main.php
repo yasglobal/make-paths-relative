@@ -37,6 +37,10 @@ new Make_Paths_Relative();
 
 /**
  * Default Settings when the plugin has activated using filter.
+ *
+ * @access public
+ * @since 0.5.3
+ * @return void
  */
 function make_paths_relative_plugin_activate() {
   if ( apply_filters( 'make_paths_relative_activate_all', '__false' ) == 1 ) {
@@ -57,6 +61,10 @@ function make_paths_relative_plugin_activate() {
 
 /**
  * Remove Option on uninstalling/deleting the Plugin.
+ *
+ * @access public
+ * @since 0.5.3
+ * @return void
  */
 function make_paths_relative_plugin_uninstall() {
   delete_option( 'make_paths_relative' );
@@ -65,6 +73,10 @@ function make_paths_relative_plugin_uninstall() {
 
 /**
  * Add textdomain hook for translation
+ *
+ * @access public
+ * @since 0.5
+ * @return void
  */
 function make_paths_relative_load_plugin_textdomain() {
   load_plugin_textdomain( 'make-paths-relative', FALSE,

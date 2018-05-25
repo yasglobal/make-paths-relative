@@ -14,6 +14,10 @@ class Make_Paths_Relative_About {
 
   /**
    * More Plugins HTML
+   *
+   * @access private
+   * @since 0.5.6
+   * @return void
    */
   private function more_plugins() {
     $plugin_url = plugins_url( '/admin', MAKE_PATHS_RELATIVE_FILE );

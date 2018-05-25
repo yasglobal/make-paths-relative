@@ -37,6 +37,10 @@ class Make_Paths_Relative {
 
   /**
    * It makes the permalinks, scripts, styles and image URLs(src) to relative
+   *
+   * @access public
+   * @since 0.2
+   * @return string
    */
   public function make_paths_relative_remove( $link ) {
     $current_post_type = get_post_type();
@@ -90,6 +94,13 @@ class Make_Paths_Relative {
     return apply_filters( 'paths_relative', $relative_link );
   }
 
+  /**
+   * Apply the appropriate Filters according to the configured settings
+   *
+   * @access private
+   * @since 0.2
+   * @return void
+   */
   private function make_paths_relative_applied( $make_relative_paths ) {
 
     //Filters to make the permalinks to relative
@@ -145,6 +156,10 @@ class Make_Paths_Relative {
 
   /**
    * Make the srcset to be relative for responsive images
+   *
+   * @access public
+   * @since 0.3
+   * @return string
    */
   public function make_paths_relative_remove_srcset( $image_srcset ) {
 
@@ -173,6 +188,10 @@ class Make_Paths_Relative {
 
   /**
    * Make URL Absolute for Post Types to build Proper Sitemap using Yoast Filter
+   *
+   * @access public
+   * @since 0.5.1
+   * @return string
    */
   public function sitemap_post_url( $post_permalink ) {
     if ( strpos( $post_permalink, $this->site_url ) === false

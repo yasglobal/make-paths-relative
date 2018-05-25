@@ -16,7 +16,11 @@ class Make_Paths_Relative_Admin {
   }
 
   /**
-   * Add Settings Pages in the Dashboard Menu.
+   * Add Settings Pages in the Dashboard Menu
+   *
+   * @access public
+   * @since 0.2
+   * @return void
    */
   public function admin_menu() {
     add_menu_page( 'Make Paths Relative Settings', 'Make Paths Relative',
@@ -38,7 +42,12 @@ class Make_Paths_Relative_Admin {
   }
 
   /**
-   * Admin Settings Page by which you can change/choose your settings according to your need.
+   * Settings Page by which Admin can change/choose the appropriate settings
+   * according to their need.
+   *
+   * @access public
+   * @since 0.2
+   * @return void
    */
   public function admin_settings_page() {
     if ( ! current_user_can( 'administrator' ) )  {
@@ -195,6 +204,10 @@ class Make_Paths_Relative_Admin {
 
   /**
    * This allows you to exclude the PostTypes to be relative
+   *
+   * @access public
+   * @since 0.5
+   * @return void
    */
   public function exclude_posts_page() {
     if ( ! current_user_can( 'administrator' ) )  {
@@ -249,6 +262,10 @@ class Make_Paths_Relative_Admin {
 
   /**
    * Add About Plugins Page
+   *
+   * @access public
+   * @since 0.5.6
+   * @return void
    */
   public function about_plugin() {
     require_once(
@@ -260,6 +277,10 @@ class Make_Paths_Relative_Admin {
 
   /**
    * Add Plugin Support and Follow Message in the footer of Admin Pages
+   *
+   * @access public
+   * @since 0.5.1
+   * @return string
    */
   public function admin_footer_text() {
     $footer_text = sprintf(
@@ -275,6 +296,10 @@ class Make_Paths_Relative_Admin {
   /**
    * Plugin About, Contact and Settings Link on the Plugin Page under
    * the Plugin Name.
+   *
+   * @access public
+   * @since 0.5.3
+   * @return array
    */
   public function settings_link( $links ) {
 
