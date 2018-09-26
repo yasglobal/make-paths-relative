@@ -39,14 +39,129 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if ( ! function_exists( 'add_action' ) || ! function_exists( 'add_filter' ) ) {
-  header( 'Status: 403 Forbidden' );
-  header( 'HTTP/1.1 403 Forbidden' );
-  exit();
+final class Make_Paths_Relative {
+
+  /**
+   * Class constructor.
+   */
+  public function __construct() {
+    $this->setup_constants();
+    $this->includes();
+  }
+
+  /**
+   * Setup plugin constants
+   *
+   * @access private
+   * @since 1.0.0
+   *
+   * @return void
+   */
+  private function setup_constants() {
+    if ( ! defined( 'MAKE_PATHS_RELATIVE_FILE' ) ) {
+      define( 'MAKE_PATHS_RELATIVE_FILE', __FILE__ );
+    }
+
+    if ( ! defined( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION' ) ) {
+      define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '1.0.0' );
+    }
+
+    if ( ! defined( 'MAKE_PATHS_RELATIVE_PATH' ) ) {
+      define( 'MAKE_PATHS_RELATIVE_PATH',
+        plugin_dir_path( MAKE_PATHS_RELATIVE_FILE )
+      );
+    }
+
+    if ( ! defined( 'MAKE_PATHS_RELATIVE_BASENAME' ) ) {
+      define( 'MAKE_PATHS_RELATIVE_BASENAME',
+        plugin_basename( MAKE_PATHS_RELATIVE_FILE )
+      );
+    }
+  }
+
+  /**
+   * Include required files
+   *
+   * @access private
+   * @since 1.0.0
+   *
+   * @return void
+   */
+  private function includes() {
+
+    require_once(
+      MAKE_PATHS_RELATIVE_PATH . 'frontend/class-make-paths-relative.php'
+    );
+    new Make_Paths_Relative_Frontend();
+
+
+    if ( is_admin() ) {
+      require_once(
+        MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-admin.php'
+      );
+      new Make_Paths_Relative_Admin();
+
+      add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+      register_activation_hook( MAKE_PATHS_RELATIVE_FILE,
+        array( 'Make_Paths_Relative', 'plugin_activate' )
+      );
+      register_uninstall_hook( MAKE_PATHS_RELATIVE_FILE,
+        array( 'Make_Paths_Relative',  'plugin_uninstall' )
+      );
+    }
+  }
+
+  /**
+   * Default Settings when the plugin has activated using filter.
+   *
+   * @access public
+   * @since 0.5.3
+   *
+   * @return void
+   */
+  public static function plugin_activate() {
+    if ( apply_filters( 'make_paths_relative_activate_all', '__false' ) == 1 ) {
+      $default_activate =  array(
+        'site_url'             =>  '',
+        'post_permalinks'      =>  'on',
+        'page_permalinks'      =>  'on',
+        'archive_permalinks'   =>  'on',
+        'author_permalinks'    =>  'on',
+        'category_permalinks'  =>  'on',
+        'scripts_src'          =>  'on',
+        'styles_src'           =>  'on',
+        'image_paths'          =>  'on'
+      );
+      update_option( 'make_paths_relative', serialize( $default_activate ) );
+    }
+  }
+
+  /**
+   * Remove Option on uninstalling/deleting the Plugin.
+   *
+   * @access public
+   * @since 0.5.3
+   *
+   * @return void
+   */
+  public static function plugin_uninstall() {
+    delete_option( 'make_paths_relative' );
+    delete_option( 'make_paths_relative_exclude' );
+  }
+
+  /**
+   * Add textdomain hook for translation
+   *
+   * @access public
+   * @since 0.5
+   *
+   * @return void
+   */
+  public function load_textdomain() {
+    load_plugin_textdomain( 'make-paths-relative', FALSE,
+      basename( dirname( MAKE_PATHS_RELATIVE_FILE ) ) . '/languages/'
+    );
+  }
 }
 
-if ( ! defined( 'MAKE_PATHS_RELATIVE_FILE' ) ) {
-  define( 'MAKE_PATHS_RELATIVE_FILE', __FILE__ );
-}
-
-require_once( dirname( MAKE_PATHS_RELATIVE_FILE ) . '/make-paths-relative-main.php' );
+new Make_Paths_Relative();

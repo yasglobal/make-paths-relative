@@ -7,7 +7,7 @@ This plugin can make(convert) the paths(URLs) to relative instead of absolute. T
 * Post Permalinks
 * Archive Permalinks
 * Author Permalinks
-* Category Permalinks
+* Term Permalinks
 * Scripts Paths(src) 
 * Styles Paths(src)
 * Image Paths(src)

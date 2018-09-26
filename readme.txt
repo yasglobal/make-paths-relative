@@ -17,7 +17,7 @@ This plugin can make(convert) the paths(URLs) to relative instead of absolute. T
 * Post Permalinks
 * Archive Permalinks
 * Author Permalinks
-* Category Permalinks
+* Term Permalinks
 * Scripts Paths(src) 
 * Styles Paths(src)
 * Image Paths(src)
@@ -104,6 +104,13 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filters in the [Description Area](https://wordpress.org/plugins/make-paths-relative/#description-header) ).
 
 == Changelog ==
+
+= 1.0.0 - Sept 26, 2018 =
+
+  * Enhancements
+    * Added Tags and Custom Taxonomy Support
+    * Change priorities for the all the filters to enhance the URLs relative performance
+    * Removed `make-paths-relative-main.php` dependency
 
 = 0.6 - May 25, 2018 =
 

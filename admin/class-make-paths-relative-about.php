@@ -3,7 +3,7 @@
  * @package MakePathsRelative\Admin
  */
 
-class Make_Paths_Relative_About {
+final class Make_Paths_Relative_About {
 
   /**
    * Class constructor.
