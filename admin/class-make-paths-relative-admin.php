@@ -109,9 +109,14 @@ final class Make_Paths_Relative_Admin {
         'styles_src'           =>  $_POST['styles_src'],
         'image_paths'          =>  $_POST['image_paths']
       );
-      update_site_option( 'make_paths_relative', serialize( $save_settings ) );
+      if( is_multisite() ) {
+	  	update_site_option( 'make_paths_relative', serialize( $save_settings ) );
+	  } else {
+		update_option( 'make_paths_relative', serialize( $save_settings ) );
+	  }
     }
-    $settings         = unserialize( get_site_option( 'make_paths_relative' ) );
+	$opt = is_multisite() ? get_site_option( 'make_paths_relative' ) : get_option( 'make_paths_relative' );
+    $settings         = unserialize( $opt );
     $site_url         = '';
     $enabled_post     = '';
     $enabled_page     = '';
@@ -124,7 +129,7 @@ final class Make_Paths_Relative_Admin {
     if ( isset( $settings ) ) {
       if ( isset( $settings['site_url'] )
         && ! empty( $settings['site_url'] ) ) {
-        $site_url = str_replace( '/wp', '/', $settings['site_url'] );
+        $site_url = $settings['site_url'];
       }
       if ( esc_attr( $settings['post_permalinks'] ) == 'on' ) {
         $enabled_post = 'checked';
@@ -174,7 +179,7 @@ final class Make_Paths_Relative_Admin {
               </th>
               <td>
                 <input type="text" name="site_url" class="regular-text" value="<?php echo $site_url; ?>" />
-                <small><?php printf( __( 'Default : %s', 'make-paths-relative' ), $site_url ? $site_url : str_replace( '/wp', '/', get_site_url() ) ); ?></small>
+                <small><?php printf( __( 'Default : %s', 'make-paths-relative' ), $site_url ? $site_url : get_site_url() ); ?></small>
                 <div><?php printf( __( 'Leave the field empty to use the <strong>%s</strong> address', 'make-paths-relative' ), $print_site_url ); ?></div>
               </td>
             </tr>
@@ -284,14 +289,19 @@ final class Make_Paths_Relative_Admin {
         }
         $exclude_post_types['post_types'][$key] = $value;
       }
-      update_site_option( 'make_paths_relative_exclude',
-        serialize( $exclude_post_types )
-      );
+      if ( is_multisite() ) {
+		  update_site_option( 'make_paths_relative_exclude', serialize( $exclude_post_types ) );
+	  } else {
+		  update_option( 'make_paths_relative_exclude', serialize( $exclude_post_types ) );
+	  }
     }
     $post_types     = get_post_types( '', 'objects' );
-    $excluded_types = unserialize(
-      get_site_option( 'make_paths_relative_exclude' )
-    );
+
+	if ( is_multisite() ) {
+	  $excluded_types = unserialize( get_site_option( 'make_paths_relative_exclude' ) );
+	} else {
+	  $excluded_types = unserialize( get_option( 'make_paths_relative_exclude' ) );
+	}
     ?>
     <div class="wrap">
       <h1><?php _e( 'Exclude Posts', 'make-paths-relative' ); ?></h1>
