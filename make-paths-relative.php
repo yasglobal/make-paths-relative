@@ -132,7 +132,7 @@ final class Make_Paths_Relative {
         'styles_src'           =>  'on',
         'image_paths'          =>  'on'
       );
-      update_option( 'make_paths_relative', serialize( $default_activate ) );
+      update_site_option( 'make_paths_relative', serialize( $default_activate ) );
     }
   }
 
@@ -145,8 +145,8 @@ final class Make_Paths_Relative {
    * @return void
    */
   public static function plugin_uninstall() {
-    delete_option( 'make_paths_relative' );
-    delete_option( 'make_paths_relative_exclude' );
+    delete_site_option( 'make_paths_relative' );
+    delete_site_option( 'make_paths_relative_exclude' );
   }
 
   /**

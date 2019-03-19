@@ -11,7 +11,7 @@ final class Make_Paths_Relative_Frontend {
    * Class constructor.
    */
   public function __construct() {
-    $make_relative_paths = unserialize( get_option( 'make_paths_relative' ) );
+    $make_relative_paths = unserialize( get_site_option( 'make_paths_relative' ) );
     if ( ! isset( $make_relative_paths ) || empty( $make_relative_paths ) ) {
       return;
     }
@@ -30,7 +30,7 @@ final class Make_Paths_Relative_Frontend {
     } elseif ( strpos( $host_name, '//' ) !== false ) {
       $host_name = str_replace( '//', '', $host_name );
     }
-    $this->make_paths_relative_url = $host_name;
+    $this->make_paths_relative_url = str_replace( '/wp', '', $host_name );
 
     $this->make_paths_relative_applied( $make_relative_paths );
   }
@@ -51,7 +51,7 @@ final class Make_Paths_Relative_Frontend {
     $current_post_type = get_post_type();
     if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
       $get_exclude_post_types = unserialize(
-        get_option( 'make_paths_relative_exclude' )
+        get_site_option( 'make_paths_relative_exclude' )
       );
       if ( isset( $get_exclude_post_types['post_types'][$current_post_type] )
         && $get_exclude_post_types['post_types'][$current_post_type] == "on" ) {
@@ -93,7 +93,7 @@ final class Make_Paths_Relative_Frontend {
     $current_post_type = get_post_type();
     if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
       $get_exclude_post_types = unserialize(
-        get_option( 'make_paths_relative_exclude' )
+        get_site_option( 'make_paths_relative_exclude' )
       );
       if ( isset( $get_exclude_post_types['post_types'][$current_post_type] )
         && $get_exclude_post_types['post_types'][$current_post_type] == "on" ) {
@@ -231,7 +231,7 @@ final class Make_Paths_Relative_Frontend {
     $current_post_type = get_post_type();
     if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
       $get_exclude_post_types = unserialize(
-        get_option( 'make_paths_relative_exclude' )
+        get_site_option( 'make_paths_relative_exclude' )
       );
       if ( isset( $get_exclude_post_types['post_types'][$current_post_type] )
         && $get_exclude_post_types['post_types'][$current_post_type] == "on" ) {
