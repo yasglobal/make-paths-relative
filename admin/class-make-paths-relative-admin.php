@@ -36,20 +36,22 @@ final class Make_Paths_Relative_Admin {
    * @return void
    */
   public function admin_menu() {
+  	$envcap = is_multisite() ? 'manage_network' : 'administrator';
+
     add_menu_page( 'Make Paths Relative Settings', 'Make Paths Relative',
-      'manage_network', 'make-paths-relative-settings',
+      $envcap, 'make-paths-relative-settings',
       array( $this, 'admin_settings_page' )
     );
     add_submenu_page( 'make-paths-relative-settings',
-      'Make Paths Relative Settings', 'Settings', 'manage_network',
+      'Make Paths Relative Settings', 'Settings', $envcap,
       'make-paths-relative-settings', array( $this, 'admin_settings_page' )
     );
     add_submenu_page( 'make-paths-relative-settings', 'Exclude Posts',
-      'Exclude Posts', 'manage_network', 'make-paths-relative-exclude-posts',
+      'Exclude Posts', $envcap, 'make-paths-relative-exclude-posts',
       array( $this, 'exclude_posts_page' )
     );
     add_submenu_page( 'make-paths-relative-settings', 'About',
-      'About', 'manage_network', 'make-paths-relative-about-plugins',
+      'About', $envcap, 'make-paths-relative-about-plugins',
       array( $this, 'about_plugin' )
     );
 
@@ -70,7 +72,9 @@ final class Make_Paths_Relative_Admin {
    * @return void
    */
   public function admin_settings_page() {
-    if ( ! current_user_can( 'manage_network' ) )  {
+  	$envcap = is_multisite() ? 'manage_network' : 'administrator';
+
+  	if ( ! current_user_can( $envcap ) )  {
       wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
     if ( isset( $_POST['submit'] ) ) {
@@ -276,7 +280,9 @@ final class Make_Paths_Relative_Admin {
    * @return void
    */
   public function exclude_posts_page() {
-    if ( ! current_user_can( 'manage_network' ) )  {
+  	$envcap = is_multisite() ? 'manage_network' : 'administrator';
+
+  	if ( ! current_user_can( $envcap ) )  {
       wp_die(
         __( 'You do not have sufficient permissions to access this page.' )
       );
@@ -295,7 +301,7 @@ final class Make_Paths_Relative_Admin {
 		  update_option( 'make_paths_relative_exclude', serialize( $exclude_post_types ) );
 	  }
     }
-    $post_types     = get_post_types( '', 'objects' );
+    $post_types = get_post_types( '', 'objects' );
 
 	if ( is_multisite() ) {
 	  $excluded_types = unserialize( get_site_option( 'make_paths_relative_exclude' ) );
@@ -311,7 +317,6 @@ final class Make_Paths_Relative_Admin {
       <form enctype="multipart/form-data" action="" method="POST" id="make-paths-relative-exclude-posts">
         <table class="form-table">
           <?php
-          $get_post_type = array();
           foreach ( $post_types as $post_type ) {
             if ( $post_type->name == 'revision'
               || $post_type->name == 'nav_menu_item' ) {
@@ -398,10 +403,19 @@ final class Make_Paths_Relative_Admin {
       __( '<a href="%s" title="Contact">Contact</a>', 'make-paths-relative' ),
       'https://www.yasglobal.com/#request-form'
     );
-    $settings_link = sprintf(
-      __( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
-		network_admin_url( 'admin.php?page=make-paths-relative-settings' )
-    );
+
+	if( is_multisite() ) {
+		$settings_link = sprintf(
+			__( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
+			network_admin_url( 'admin.php?page=make-paths-relative-settings' )
+		);
+	} else {
+		$settings_link = sprintf(
+			__( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
+			admin_url( 'admin.php?page=make-paths-relative-settings' )
+		);
+	}
+
     array_unshift( $links, $settings_link );
     array_unshift( $links, $contact );
     array_unshift( $links, $about );
