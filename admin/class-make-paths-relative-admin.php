@@ -9,7 +9,22 @@ final class Make_Paths_Relative_Admin {
    * Initializes WordPress hooks.
    */
   public function __construct() {
-    add_action ( 'admin_menu', array( $this, 'admin_menu' ) );
+  	$action = 'admin_menu';
+
+  	if( is_multisite() ) {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		$plugin = trailingslashit( basename( plugin_dir_path(  dirname( __FILE__ ) ) ) ) .
+				  basename( plugin_dir_path(  dirname( __FILE__ ) ) ) . '.php';
+
+		if ( is_plugin_active_for_network( $plugin ) ) {
+			$action = 'network_admin_menu';
+		}
+	}
+
+  	add_action ( $action, array( $this, 'admin_menu' ) );
   }
 
   /**
@@ -21,20 +36,22 @@ final class Make_Paths_Relative_Admin {
    * @return void
    */
   public function admin_menu() {
+  	$envcap = is_multisite() ? 'manage_network' : 'administrator';
+
     add_menu_page( 'Make Paths Relative Settings', 'Make Paths Relative',
-      'administrator', 'make-paths-relative-settings',
+      $envcap, 'make-paths-relative-settings',
       array( $this, 'admin_settings_page' )
     );
     add_submenu_page( 'make-paths-relative-settings',
-      'Make Paths Relative Settings', 'Settings', 'administrator',
+      'Make Paths Relative Settings', 'Settings', $envcap,
       'make-paths-relative-settings', array( $this, 'admin_settings_page' )
     );
     add_submenu_page( 'make-paths-relative-settings', 'Exclude Posts',
-      'Exclude Posts', 'administrator', 'make-paths-relative-exclude-posts',
+      'Exclude Posts', $envcap, 'make-paths-relative-exclude-posts',
       array( $this, 'exclude_posts_page' )
     );
     add_submenu_page( 'make-paths-relative-settings', 'About',
-      'About', 'administrator', 'make-paths-relative-about-plugins',
+      'About', $envcap, 'make-paths-relative-about-plugins',
       array( $this, 'about_plugin' )
     );
 
@@ -55,7 +72,9 @@ final class Make_Paths_Relative_Admin {
    * @return void
    */
   public function admin_settings_page() {
-    if ( ! current_user_can( 'administrator' ) )  {
+  	$envcap = is_multisite() ? 'manage_network' : 'administrator';
+
+  	if ( ! current_user_can( $envcap ) )  {
       wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
     if ( isset( $_POST['submit'] ) ) {
@@ -94,9 +113,14 @@ final class Make_Paths_Relative_Admin {
         'styles_src'           =>  $_POST['styles_src'],
         'image_paths'          =>  $_POST['image_paths']
       );
-      update_option( 'make_paths_relative', serialize( $save_settings ) );
+      if( is_multisite() ) {
+	  	update_site_option( 'make_paths_relative', serialize( $save_settings ) );
+	  } else {
+		update_option( 'make_paths_relative', serialize( $save_settings ) );
+	  }
     }
-    $settings         = unserialize( get_option( 'make_paths_relative' ) );
+	$opt = is_multisite() ? get_site_option( 'make_paths_relative' ) : get_option( 'make_paths_relative' );
+    $settings         = unserialize( $opt );
     $site_url         = '';
     $enabled_post     = '';
     $enabled_page     = '';
@@ -159,7 +183,7 @@ final class Make_Paths_Relative_Admin {
               </th>
               <td>
                 <input type="text" name="site_url" class="regular-text" value="<?php echo $site_url; ?>" />
-                <small><?php printf( __( 'Default : %s', 'make-paths-relative' ), $print_site_url); ?></small>
+                <small><?php printf( __( 'Default : %s', 'make-paths-relative' ), $site_url ? $site_url : get_site_url() ); ?></small>
                 <div><?php printf( __( 'Leave the field empty to use the <strong>%s</strong> address', 'make-paths-relative' ), $print_site_url ); ?></div>
               </td>
             </tr>
@@ -256,7 +280,9 @@ final class Make_Paths_Relative_Admin {
    * @return void
    */
   public function exclude_posts_page() {
-    if ( ! current_user_can( 'administrator' ) )  {
+  	$envcap = is_multisite() ? 'manage_network' : 'administrator';
+
+  	if ( ! current_user_can( $envcap ) )  {
       wp_die(
         __( 'You do not have sufficient permissions to access this page.' )
       );
@@ -269,14 +295,19 @@ final class Make_Paths_Relative_Admin {
         }
         $exclude_post_types['post_types'][$key] = $value;
       }
-      update_option( 'make_paths_relative_exclude',
-        serialize( $exclude_post_types )
-      );
+      if ( is_multisite() ) {
+		  update_site_option( 'make_paths_relative_exclude', serialize( $exclude_post_types ) );
+	  } else {
+		  update_option( 'make_paths_relative_exclude', serialize( $exclude_post_types ) );
+	  }
     }
-    $post_types     = get_post_types( '', 'objects' );
-    $excluded_types = unserialize(
-      get_option( 'make_paths_relative_exclude' )
-    );
+    $post_types = get_post_types( '', 'objects' );
+
+	if ( is_multisite() ) {
+	  $excluded_types = unserialize( get_site_option( 'make_paths_relative_exclude' ) );
+	} else {
+	  $excluded_types = unserialize( get_option( 'make_paths_relative_exclude' ) );
+	}
     ?>
     <div class="wrap">
       <h1><?php _e( 'Exclude Posts', 'make-paths-relative' ); ?></h1>
@@ -286,7 +317,6 @@ final class Make_Paths_Relative_Admin {
       <form enctype="multipart/form-data" action="" method="POST" id="make-paths-relative-exclude-posts">
         <table class="form-table">
           <?php
-          $get_post_type = array();
           foreach ( $post_types as $post_type ) {
             if ( $post_type->name == 'revision'
               || $post_type->name == 'nav_menu_item' ) {
@@ -373,10 +403,19 @@ final class Make_Paths_Relative_Admin {
       __( '<a href="%s" title="Contact">Contact</a>', 'make-paths-relative' ),
       'https://www.yasglobal.com/#request-form'
     );
-    $settings_link = sprintf(
-      __( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
-      'admin.php?page=make-paths-relative-settings'
-    );
+
+	if( is_multisite() ) {
+		$settings_link = sprintf(
+			__( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
+			network_admin_url( 'admin.php?page=make-paths-relative-settings' )
+		);
+	} else {
+		$settings_link = sprintf(
+			__( '<a href="%s" title="Settings">Settings</a>', 'make-paths-relative' ),
+			admin_url( 'admin.php?page=make-paths-relative-settings' )
+		);
+	}
+
     array_unshift( $links, $settings_link );
     array_unshift( $links, $contact );
     array_unshift( $links, $about );

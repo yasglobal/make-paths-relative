@@ -132,7 +132,11 @@ final class Make_Paths_Relative {
         'styles_src'           =>  'on',
         'image_paths'          =>  'on'
       );
-      update_option( 'make_paths_relative', serialize( $default_activate ) );
+		if( is_multisite() ) {
+			update_site_option( 'make_paths_relative', serialize( $default_activate ) );
+		} else {
+			update_option( 'make_paths_relative', serialize( $default_activate ) );
+		}
     }
   }
 
@@ -145,8 +149,13 @@ final class Make_Paths_Relative {
    * @return void
    */
   public static function plugin_uninstall() {
-    delete_option( 'make_paths_relative' );
-    delete_option( 'make_paths_relative_exclude' );
+    if( is_multisite() ) {
+  		delete_site_option( 'make_paths_relative' );
+    	delete_site_option( 'make_paths_relative_exclude' );
+	} else {
+		delete_option( 'make_paths_relative' );
+		delete_option( 'make_paths_relative_exclude' );
+	}
   }
 
   /**
