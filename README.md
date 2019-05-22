@@ -2,7 +2,9 @@
 
 ## Description 
 
-This plugin can make(convert) the paths(URLs) to relative instead of absolute. This plugin is useful to using the relative URLs. The given below list of permalinks and src can be easily converted to relative:
+This plugin can make(convert) the paths(URLs) to a relative instead of the absolute. 
+This plugin is useful for using relative URLs. The given below list of permalinks and src can 
+be easily converted to a relative:
 
 * Post Permalinks
 * Archive Permalinks
@@ -12,13 +14,15 @@ This plugin can make(convert) the paths(URLs) to relative instead of absolute. T
 * Styles Paths(src)
 * Image Paths(src)
 
-All the above permalinks and src can be converted to relative instead absolute by using this plugin. You can select the options from the plugin settings page. 
+All the above permalinks and src can be converted to a relative instead of absolute by using 
+this plugin. You can select the options from the plugin settings page. 
 
 ### Filters
 
-If you want to exclude some Permalink or src to be relative so, you can use `paths_relative` filter in your theme's functions.php or in your custom plugin.
+If you want to exclude some Permalink or src to be a relative then you can use 
+`paths_relative` filter in your theme's `functions.php` or in your custom plugin.
 
-Your filter may looks like this (Below filter would make the jquery.js Path to absolute):
+Your filter may look like this (Below filter would make the jquery.js Path to absolute):
 
 ```
 function yasglobal_change_path( $link ) {
@@ -30,15 +34,15 @@ function yasglobal_change_path( $link ) {
 add_filter( 'paths_relative', 'yasglobal_change_path' );
 ```
 
-If you doesn't want to Make the Paths relative for srcset(Responsive Images)
-so, just add this line in your theme's functions.php
+If you don't want to Make the Paths relative for srcset(Responsive Images) then add the 
+below-mentioned line in your theme's `functions.php`.
 
 ```
 add_filter( 'srcset_paths_relative', '__return_false' );
 ```
 
-If you want to make plugin works and all the paths relative without going to
-check/visit Settings Page so, just add this line in your theme's functions.php.
+If you want to make plugin works and all the paths relative without going to 
+check/visit Settings Page so, just add this line in your theme's `functions.php`.
 
 ```
 add_filter( 'make_paths_relative_activate_all', '__return_true' );
@@ -48,13 +52,14 @@ add_filter( 'make_paths_relative_activate_all', '__return_true' );
 
 ### Thanks for the Support
 
-The support from the users that love Make Paths Relative is huge. You can support Make Paths Relative future development and help to make it even better by donating or even giving a 5 star rating with a nice message to me :)
-
-[Donate to Make Paths Relative](https://www.paypal.me/yasglobal)
+The support from the users that love Make Paths Relative is huge. You can support 
+Make Paths Relative future development and help to make it even better by giving 
+a 5-star rating with a nice message to me :)
 
 ## Installation
 
-This process defines you the steps to follow either you are installing through WordPress or Manually from FTP.
+This process defines you the steps to follow either you are installing through WordPress 
+or Manually from FTP.
 
 ### From within WordPress
 
@@ -80,10 +85,11 @@ This process defines you the steps to follow either you are installing through W
 
 A. Installing this plugin is the easiest way to make the paths(Permalinks + src) relative.
 
-**Q. May i select the paths which i want to be show as relative items?** 
+**Q. May I select the paths which I want to be shown as relative items?** 
 
 A. Yes, You can select the items you want to be relative.
 
-**Q. May i exclude some items to be shown as absolute?** 
+**Q. May I exclude some items to be shown as absolute?** 
 
-A. Yes, You can exclude the items by using the add_filter (You can find the filters in the [Description Area](https://github.com/yasglobal/make-paths-relative#filters)).
+A. Yes, You can exclude the items by using the add_filter 
+(You can find the filters in the [Description Area](https://github.com/yasglobal/make-paths-relative#filters)).

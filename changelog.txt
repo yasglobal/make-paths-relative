@@ -22,7 +22,7 @@ This file contains only old changelog. See readme.txt for newer versions.
 
 = 0.5.2 - Dec 14, 2017 =
 
-  * Fixing Spelling mistake and changing name of class FILE
+  * Fixing Spelling mistake and changing the name of class FILE
 
 = 0.5.1 - Sept 29, 2017 =
 
@@ -38,7 +38,7 @@ This file contains only old changelog. See readme.txt for newer versions.
 
 = 0.4 - Aug 01, 2017 =
 
-  * Fixed Protocol Issue and `//` startings URLs
+  * Fixed Protocol Issue and `//` from the starting URLs
 
 = 0.3 - Jul 27, 2017 =
 
@@ -50,7 +50,7 @@ This file contains only old changelog. See readme.txt for newer versions.
 
 = 0.2 - May 28, 2017 =
 
-  * Optimized the Plugin to provide the better performance and added the filter
+  * Optimized the Plugin to provide better performance and added the filter
 
 = 0.1 - Jun 16, 2016 =
 
