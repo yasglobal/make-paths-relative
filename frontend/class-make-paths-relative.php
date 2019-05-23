@@ -40,7 +40,6 @@ final class Make_Paths_Relative_Frontend {
    *
    * @access public
    * @since 0.2
-   * @updated 1.1.0
    *
    * @param string $link
    *   Permalink which is going to be shown
@@ -51,7 +50,7 @@ final class Make_Paths_Relative_Frontend {
   public function make_paths_relative_remove( $link ) {
     // Don't do anything if the current query is for a feed.
     if ( is_feed() ) {
-      return;
+      return $link;
     }
 
     $current_post_type = get_post_type();
@@ -84,7 +83,6 @@ final class Make_Paths_Relative_Frontend {
    *
    * @access public
    * @since 0.6
-   * @updated 1.1.0
    *
    * @param string $link
    *   Permalink which is going to be shown
@@ -99,7 +97,7 @@ final class Make_Paths_Relative_Frontend {
   public function relative_post_urls( $link, $post, $leavename = false ) {
     // Don't do anything if the current query is for a feed.
     if ( is_feed() ) {
-      return;
+      return $link;
     }
 
     $current_post_type = get_post_type();
@@ -231,7 +229,6 @@ final class Make_Paths_Relative_Frontend {
    *
    * @access public
    * @since 0.3
-   * @updated 1.1.0
    *
    * @param string $image_srcset
    *   Source set of image
@@ -240,9 +237,10 @@ final class Make_Paths_Relative_Frontend {
    *   Return the Relative Source set of image
    */
   public function make_paths_relative_remove_srcset( $image_srcset ) {
+
     // Don't do anything if the current query is for a feed.
     if ( is_feed() ) {
-      return;
+      return $image_srcset;
     }
 
     $current_post_type = get_post_type();
