@@ -3,7 +3,7 @@ Contributors: sasiddiqui, aliya yasir
 Tags: GDPR, URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 5.2
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -99,6 +99,12 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filters in the [Description Area](https://wordpress.org/plugins/make-paths-relative/#description-header) ).
 
 == Changelog ==
+
+= 1.1.0 - May 23, 2019 =
+
+  * Bug
+    * Preserve absolute links in RSS feed. For more detail, please visit:
+      https://wordpress.org/support/topic/preserve-absolute-links-in-rss-feed/
 
 = 1.0.0 - Sept 26, 2018 =
 
