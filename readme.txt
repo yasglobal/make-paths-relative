@@ -1,5 +1,5 @@
 === Make Paths Relative ===
-Contributors: sasiddiqui, aliya yasir
+Contributors: sasiddiqui, aliya-yasir
 Tags: GDPR, URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 5.2
@@ -99,6 +99,11 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filters in the [Description Area](https://wordpress.org/plugins/make-paths-relative/#description-header) ).
 
 == Changelog ==
+
+= 1.1.1 - May 23, 2019 =
+
+  * Bug
+    * Link gets empty in RSS feed
 
 = 1.1.0 - May 23, 2019 =
 
