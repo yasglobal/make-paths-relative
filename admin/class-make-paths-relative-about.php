@@ -17,6 +17,8 @@ final class Make_Paths_Relative_About {
    *
    * @access private
    * @since 0.5.6
+   * @updated 1.1.0
+   *
    * @return void
    */
   private function more_plugins() {
@@ -53,7 +55,7 @@ final class Make_Paths_Relative_About {
       <div class="float">
         <h1><?php echo $plugin_name . ' ' . MAKE_PATHS_RELATIVE_PLUGIN_VERSION; ?></h1>
         <div class="tagline">
-          <p><?php _e('Thank you for choosing Make Paths Relative! We hope that your experience with our plugin for making your URLs from absolute to relative is quick and easy.', 'make-paths-relative' ); ?></p>
+          <p><?php _e('Thank you for choosing Make Paths Relative! We hope that your experience with our plugin for making your URLs from absolute to a relative is quick and easy.', 'make-paths-relative' ); ?></p>
           <p><?php printf( __( 'To support future development and help to make it even better just leaving us a <a href="%s" title="Make Paths Relative Rating" target="_blank">%s</a> rating with a nice message to me :)', 'make-paths-relative' ), 'https://wordpress.org/support/plugin/make-paths-relative/reviews/?rate=5#new-post', $five_star ); ?></p>
         </div>
       </div>
@@ -64,7 +66,7 @@ final class Make_Paths_Relative_About {
 
       <div class="product">
         <h2><?php _e( 'More from YAS Global', 'make-paths-relative' ); ?></h2>
-        <span><?php _e('Our List of Plugins provides the services which helps you to manage your site URLs(Permalinks), Prevent your site from XSS Attacks, Brute force attacks, increase your site visitors by adding Structured JSON Markup and so on.', 'make-paths-relative' ); ?></span>
+        <span><?php _e('Our List of Plugins provides the services which help you to manage your site URLs(Permalinks), Prevent your site from XSS Attacks, Brute force attacks, increase your site visitors by adding Structured JSON Markup and so on.', 'make-paths-relative' ); ?></span>
         <div class="box">
           <div class="img">
             <img src= "<?php echo $img_src; ?>/custom-permalinks.svg" />
@@ -81,7 +83,7 @@ final class Make_Paths_Relative_About {
           </div>
 
           <h3><?php _e( 'Permalinks Customizer', 'make-paths-relative' ); ?></h3>
-          <p><?php _e( 'Allows you to either define different Permalink Structure or define same Permalink Structure for default and Custom PostTypes, Taxonomies. Plugin automatically creates the user-friendly URLs as per your defined structured that can be edited from the single post/page.', 'make-paths-relative' ); ?></p>
+          <p><?php _e( 'Allows you to either define different Permalink Structure or define same Permalink Structure for default and Custom PostTypes, Taxonomies. The plugin automatically creates the user-friendly URLs as per your defined structure that can be edited from the single post/page.', 'make-paths-relative' ); ?></p>
           <a href="https://wordpress.org/plugins/permalinks-customizer/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
         </div>
 
@@ -91,7 +93,7 @@ final class Make_Paths_Relative_About {
           </div>
 
           <h3><?php _e( 'Prevent XSS Vulnerability', 'make-paths-relative' ); ?></h3>
-          <p><?php _e( 'Secure your site from the <strong>XSS Attacks</strong> so, your users won\'t lose any kind of information or not redirected to any other site by visiting to your site with the <strong>malicious code</strong> in the URL or so. In this way, users can open your site URLs without any hesitation.', 'make-paths-relative' ); ?></p>
+          <p><?php _e( 'Secure your site from the <strong>XSS Attacks</strong> so, your users won\'t lose any kind of information or not redirected to any other site by visiting your site with the <strong>malicious code</strong> in the URL or so. In this way, users can open their site URLs without any hesitation.', 'make-paths-relative' ); ?></p>
           <a href="https://wordpress.org/plugins/prevent-xss-vulnerability/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
         </div>
 
@@ -111,7 +113,7 @@ final class Make_Paths_Relative_About {
           </div>
 
           <h3><?php _e( 'HTTP Auth', 'make-paths-relative' ); ?></h3>
-          <p><?php _e( 'Allows you apply <strong>HTTP Auth</strong> on your site. You can apply HTTP Authentication all over the site or only the admin pages. It helps to stop cralwing on your site while on development or persist the <strong>Brute Attacks</strong> by locking the Admin Pages.', 'make-paths-relative' ); ?></p>
+          <p><?php _e( 'Allows you apply <strong>HTTP Auth</strong> on your site. You can apply HTTP Authentication all over the site or only the admin pages. It helps to stop crawling on your site while on development or persist the <strong>Brute Attacks</strong> by locking the Admin Pages.', 'make-paths-relative' ); ?></p>
           <a href="https://wordpress.org/plugins/http-auth/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
         </div>
 
@@ -121,7 +123,7 @@ final class Make_Paths_Relative_About {
           </div>
 
           <h3><?php _e( 'JSON Structuring Markup', 'make-paths-relative' ); ?></h3>
-          <p><?php _e( 'Simply the easiest solution to add valid schema.org as a JSON script in the head of posts and pages. It provides you multiple <strong>SCHEMA</strong> types like Article, News Article, Organization and Website Schema.', 'make-paths-relative' ); ?></p>
+          <p><?php _e( 'Simply the easiest solution to add valid schema.org as a JSON script in the head of posts and pages. It provides you multiple <strong>SCHEMA</strong> types like Article, News Article, Organization, and Website Schema.', 'make-paths-relative' ); ?></p>
           <a href="https://wordpress.org/plugins/json-structuring-markup/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
         </div>
 
@@ -141,7 +143,7 @@ final class Make_Paths_Relative_About {
           </div>
 
           <h3><?php _e( 'Media Post Permalink', 'make-paths-relative' ); ?></h3>
-          <p><?php _e( 'On uploading  any image,  let\'s say services.png, WordPress creates the <strong>attachment post</strong> with the permalink of <strong>/services/</strong> and doesn\'t allow you to use that permalink to point your page. In this case, we comes up with this great solution.', 'make-paths-relative' ); ?></p>
+          <p><?php _e( 'On uploading  any image,  let\'s say services.png, WordPress creates the <strong>attachment post</strong> with the permalink of <strong>/services/</strong> and doesn\'t allow you to use that permalink to point your page. In this case, we come up with this great solution.', 'make-paths-relative' ); ?></p>
           <a href="https://wordpress.org/plugins/media-post-permalink/" class="checkout-button" target="_blank"><?php echo $button_text; ?></a>
         </div>
       </div>
