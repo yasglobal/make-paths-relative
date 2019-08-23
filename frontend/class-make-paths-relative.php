@@ -159,11 +159,9 @@ final class Make_Paths_Relative_Frontend {
       add_filter( 'post_type_link',
         array( $this, 'relative_post_urls' ), 100, 3
       );
-      if ( defined( 'WPSEO_VERSION' ) ) {
-        add_filter( 'wpseo_xml_sitemap_post_url',
-          array( $this, 'sitemap_post_url' ), 100
-        );
-      }
+      add_filter( 'wpseo_xml_sitemap_post_url',
+        array( $this, 'sitemap_post_url' ), 100
+      );
     }
 
     if ( isset( $make_relative_paths['page_permalinks'] )
