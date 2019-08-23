@@ -3,7 +3,7 @@ Contributors: sasiddiqui, aliya-yasir
 Tags: GDPR, URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 5.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -99,6 +99,11 @@ A. Yes, You can select the items you want to be relative.
 A. Yes, You can exclude the items by using the add_filter (You can find the filters in the [Description Area](https://wordpress.org/plugins/make-paths-relative/#description-header) ).
 
 == Changelog ==
+
+= 1.1.2 - Aug 23, 2019 =
+
+  * Bug
+    * [conflicts with Yoast Sitemap](https://github.com/yasglobal/make-paths-relative/issues/2)
 
 = 1.1.1 - May 23, 2019 =
 

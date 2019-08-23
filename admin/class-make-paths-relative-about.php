@@ -1,6 +1,6 @@
 <?php
 /**
- * @package MakePathsRelative\Admin
+ * @package MakePathsRelative
  */
 
 final class Make_Paths_Relative_About {

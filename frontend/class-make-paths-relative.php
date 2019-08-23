@@ -1,6 +1,6 @@
 <?php
 /**
- * @package MakePathsRelative\Frontend
+ * @package MakePathsRelative
  */
 
 final class Make_Paths_Relative_Frontend {
