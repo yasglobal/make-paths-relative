@@ -146,8 +146,18 @@ final class Make_Paths_Relative_Frontend {
    * @return void
    */
   private function make_paths_relative_applied( $make_relative_paths ) {
+    // Check if current requested URL contains `sitemap.xml`.
+    if ( isset( $_SERVER )
+      && strpos( $_SERVER['REQUEST_URI'], 'sitemap.xml' ) !== FALSE
+    ) {
+      $url_path = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
+      // Check if current requested path contains `sitemap.xml`.
+      if ( isset( $url_path ) && strpos( $url_path, 'sitemap.xml' ) !== FALSE ) {
+        return;
+      }
+    }
 
-    //Filters to make the permalinks to relative
+    // Filters to make the permalinks to relative.
     if ( isset( $make_relative_paths['post_permalinks'] )
       && ! empty( $make_relative_paths['post_permalinks'] ) ) {
       add_filter( 'the_permalink',
@@ -195,7 +205,7 @@ final class Make_Paths_Relative_Frontend {
       );
     }
 
-    //Filters to make the scripts and style urls to relative
+    // Filters to make the scripts and style urls to relative.
     if ( isset( $make_relative_paths['scripts_src'] )
       && ! empty( $make_relative_paths['scripts_src'] ) ) {
       add_filter( 'script_loader_src',
@@ -210,7 +220,7 @@ final class Make_Paths_Relative_Frontend {
       );
     }
 
-    //Filter to make the media(image) src to relative
+    // Filter to make the media(image) src to relative.
     if ( isset( $make_relative_paths['image_paths'] )
       && ! empty( $make_relative_paths['image_paths'] ) ) {
       add_filter( 'wp_get_attachment_url',
@@ -223,7 +233,7 @@ final class Make_Paths_Relative_Frontend {
   }
 
   /**
-   * Make the srcset to be relative for responsive images
+   * Make the srcset to be relative for responsive images.
    *
    * @access public
    * @since 0.3
@@ -273,7 +283,7 @@ final class Make_Paths_Relative_Frontend {
   }
 
   /**
-   * Make URL Absolute for Post Types to build Proper Sitemap using Yoast Filter
+   * Make URL Absolute for Post Types to build Proper Sitemap using Yoast Filter.
    *
    * @access public
    * @since 0.5.1
