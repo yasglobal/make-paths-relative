@@ -2,6 +2,37 @@
 
 This file contains only old changelog. See readme.txt for newer versions.
 
+= 1.1.1 - May 23, 2019 =
+
+  * Bug
+    * Link gets empty in RSS feed
+
+= 1.1.0 - May 23, 2019 =
+
+  * Bug
+    * Preserve absolute links in RSS feed. For more detail, please visit:
+      https://wordpress.org/support/topic/preserve-absolute-links-in-rss-feed/
+
+= 1.0.0 - Sept 26, 2018 =
+
+  * Enhancements
+    * Added Tags and Custom Taxonomy Support
+    * Change priorities for all the filters to enhance the URLs relative performance
+    * Removed `make-paths-relative-main.php` dependency
+
+= 0.6 - May 25, 2018 =
+
+  * Enhancements
+    * Added Privacy Policy Section which will be shown in Admin Dashboard for
+      WordPress 4.9.6 or higher
+
+  * Bug
+    * Fixed redirect issue for media when it is attached to post.
+
+= 0.5.7 - Jan 26, 2018 =
+
+  * Update text domain on about page
+
 = 0.5.6 - Jan 25, 2018 =
 
   * Fixed PHP Notices on saving settings

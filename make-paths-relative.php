@@ -3,7 +3,7 @@
  * Plugin Name: Make Paths Relative
  * Plugin URI: https://www.yasglobal.com/web-design-development/wordpress/make-paths-relative/
  * Description: This plugin converts the URL(Links) to relative instead of absolute.
- * Version: 1.1.2
+ * Version: 1.2.0
  * Author: YAS Global Team
  * Author URI: https://profiles.wordpress.org/sasiddiqui/
  * License: GPLv3
@@ -16,7 +16,7 @@
 
 /**
  * Make Paths Relative - Convert Absolute URL to Relative WordPress
- * Copyright (C) 2016-2020, Sami Ahmed Siddiqui <sami.siddiqui@yasglobal.com>
+ * Copyright (C) 2016-2021, Sami Ahmed Siddiqui <sami.siddiqui@yasglobal.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Make sure we don't expose any info if called directly
+// Make sure we don't expose any info if called directly.
 if ( ! defined( 'ABSPATH' ) ) {
   echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
   exit;
@@ -49,7 +49,7 @@ final class Make_Paths_Relative {
   }
 
   /**
-   * Setup plugin constants
+   * Setup plugin constants.
    *
    * @access private
    * @since 1.0.0
@@ -62,7 +62,7 @@ final class Make_Paths_Relative {
     }
 
     if ( ! defined( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION' ) ) {
-      define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '1.1.2' );
+      define( 'MAKE_PATHS_RELATIVE_PLUGIN_VERSION', '1.2.0' );
     }
 
     if ( ! defined( 'MAKE_PATHS_RELATIVE_PATH' ) ) {
@@ -79,7 +79,7 @@ final class Make_Paths_Relative {
   }
 
   /**
-   * Include required files
+   * Include required files.
    *
    * @access private
    * @since 1.0.0

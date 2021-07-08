@@ -3,7 +3,7 @@ Contributors: sasiddiqui, aliya-yasir
 Tags: GDPR, URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
 Tested up to: 5.5
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -100,41 +100,15 @@ A. Yes, You can exclude the items by using the add_filter (You can find the filt
 
 == Changelog ==
 
+= 1.2.0 - Jul 8, 2021 =
+
+  * Bug
+    * [Compatibility issue between "Yoast SEO" and "Make Paths Relative"](https://wordpress.org/support/topic/compatibility-issue-between-yoast-seo-and-make-paths-relative/)
+
 = 1.1.2 - Aug 23, 2019 =
 
   * Bug
     * [conflicts with Yoast Sitemap](https://github.com/yasglobal/make-paths-relative/issues/2)
-
-= 1.1.1 - May 23, 2019 =
-
-  * Bug
-    * Link gets empty in RSS feed
-
-= 1.1.0 - May 23, 2019 =
-
-  * Bug
-    * Preserve absolute links in RSS feed. For more detail, please visit:
-      https://wordpress.org/support/topic/preserve-absolute-links-in-rss-feed/
-
-= 1.0.0 - Sept 26, 2018 =
-
-  * Enhancements
-    * Added Tags and Custom Taxonomy Support
-    * Change priorities for all the filters to enhance the URLs relative performance
-    * Removed `make-paths-relative-main.php` dependency
-
-= 0.6 - May 25, 2018 =
-
-  * Enhancements
-    * Added Privacy Policy Section which will be shown in Admin Dashboard for
-      WordPress 4.9.6 or higher
-
-  * Bug
-    * Fixed redirect issue for media when it is attached to post.
-
-= 0.5.7 - Jan 26, 2018 =
-
-  * Update text domain on about page
 
 = Earlier versions =
 
