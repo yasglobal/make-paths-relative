@@ -2,8 +2,8 @@
 Contributors: sasiddiqui, aliya-yasir
 Tags: GDPR, URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
 Requires at least: 3.5
-Tested up to: 5.7
-Stable tag: 1.2.1
+Tested up to: 5.8
+Stable tag: 1.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -100,20 +100,12 @@ A. Yes, You can exclude the items by using the add_filter (You can find the filt
 
 == Changelog ==
 
-= 1.2.1 - Jul 16, 2021 =
+= 1.3.0 - Dec 23, 2021 =
 
   * Bug
-    * [Compatibility issue between "Yoast SEO" and "Make Paths Relative"](https://wordpress.org/support/topic/compatibility-issue-between-yoast-seo-and-make-paths-relative/)
-
-= 1.2.0 - Jul 8, 2021 =
-
-  * Bug
-    * Relative link issue on sitemap
-
-= 1.1.2 - Aug 23, 2019 =
-
-  * Bug
-    * [conflicts with Yoast Sitemap](https://github.com/yasglobal/make-paths-relative/issues/2)
+    * [Make exception for WooCommerce exported CSV file](https://wordpress.org/support/topic/make-exception-for-woocommerce-exported-csv-file/)
+  * Enhancements
+    * [Added support for `esc_url()`](https://wordpress.org/support/topic/add-for-esc_url/)
 
 = Earlier versions =
 
