@@ -67,6 +67,11 @@ final class Make_Paths_Relative_Frontend {
       return $link;
     }
 
+		// Don't do anything if the Product export action exists.
+		if ( has_action( 'wp_ajax_woocommerce_do_ajax_product_export' ) ) {
+			return $link;
+		}
+
     $current_post_type = get_post_type();
     if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
       $get_exclude_post_types = unserialize(
@@ -109,6 +114,11 @@ final class Make_Paths_Relative_Frontend {
     if ( is_feed() ) {
       return $link;
     }
+
+		// Don't do anything if the Product export action exists.
+		if ( has_action( 'wp_ajax_woocommerce_do_ajax_product_export' ) ) {
+			return $link;
+		}
 
 		/*
 		 * If URL contains `post name` or `page name` then return the `link` as it
@@ -276,6 +286,11 @@ final class Make_Paths_Relative_Frontend {
     if ( is_feed() ) {
       return $image_srcset;
     }
+
+		// Don't do anything if the Product export action exists.
+		if ( has_action( 'wp_ajax_woocommerce_do_ajax_product_export' ) ) {
+			return $image_srcset;
+		}
 
     $current_post_type = get_post_type();
     if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
