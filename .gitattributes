@@ -6,12 +6,10 @@
 
 # Remove files for archives generated using `git archive`.
 .*                export-ignore
-about-plugins.css export-ignore
-admin-style.css   export-ignore
+assets/css/src    export-ignore
 composer.*        export-ignore
 gulpfile.js       export-ignore
 package.json      export-ignore
 package-lock.json export-ignore
 phpunit.*         export-ignore
 README.md         export-ignore
-script.js         export-ignore
