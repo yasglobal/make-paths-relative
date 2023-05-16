@@ -25,27 +25,27 @@ class Make_Paths_Relative_Exclude {
 	 *
 	 * @access private
 	 * @since 0.5
-	 *
-	 * @return void
 	 */
 	private function posts_page() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['submit'] ) ) {
 			$exclude_post_types = array();
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			foreach ( $_POST as $key => $value ) {
-				if ( $key === 'submit' ) {
+				if ( 'submit' === $key ) {
 					continue;
 				}
 				$exclude_post_types['post_types'][ $key ] = $value;
 			}
-			update_option(
-				'make_paths_relative_exclude',
-				serialize( $exclude_post_types )
-			);
+
+			update_option( 'make_paths_relative_exclude', $exclude_post_types );
 		}
 		$post_types     = get_post_types( '', 'objects' );
-		$excluded_types = unserialize(
-			get_option( 'make_paths_relative_exclude' )
-		);
+		$excluded_types = get_option( 'make_paths_relative_exclude' );
+
+		if ( is_string( $excluded_types ) ) {
+			$excluded_types = maybe_unserialize( $excluded_types );
+		}
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Exclude Posts', 'make-paths-relative' ); ?></h1>
@@ -57,20 +57,21 @@ class Make_Paths_Relative_Exclude {
 					<?php
 					$get_post_type = array();
 					foreach ( $post_types as $post_type ) {
-						if ( $post_type->name == 'revision'
-							|| $post_type->name == 'nav_menu_item' ) {
+						if ( 'revision' === $post_type->name
+							|| 'nav_menu_item' === $post_type->name ) {
 							continue;
 						}
 						$excluded = '';
 						if ( isset( $excluded_types['post_types'][ $post_type->name ] )
-							&& $excluded_types['post_types'][ $post_type->name ] == 'on' ) {
+							&& 'on' === $excluded_types['post_types'][ $post_type->name ]
+						) {
 							$excluded = 'checked';
 						}
 						?>
 					<tr valign="top">
 						<td>
-						<input type="checkbox" name="<?php echo $post_type->name; ?>" value="on" <?php echo $excluded; ?> />
-						<strong><?php echo $post_type->labels->name; ?></strong>
+						<input type="checkbox" name="<?php echo esc_attr( $post_type->name ); ?>" value="on" <?php echo esc_attr( $excluded ); ?> />
+						<strong><?php echo esc_html( $post_type->labels->name ); ?></strong>
 					</tr>
 					<?php } ?>
 				</table>

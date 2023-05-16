@@ -19,7 +19,7 @@ final class Make_Paths_Relative {
 	 *
 	 * @var string
 	 */
-	public $version = '2.0.0';
+	public $version = '1.3.0';
 
 	/**
 	 * Class constructor.
@@ -106,11 +106,9 @@ final class Make_Paths_Relative {
 	 *
 	 * @access public
 	 * @since 0.5.3
-	 *
-	 * @return void
 	 */
 	public static function plugin_activate() {
-		if ( apply_filters( 'make_paths_relative_activate_all', '__false' ) == 1 ) {
+		if ( 1 === (int) apply_filters( 'make_paths_relative_activate_all', '__false' ) ) {
 			$default_activate = array(
 				'site_url'            => '',
 				'post_permalinks'     => 'on',
@@ -123,7 +121,7 @@ final class Make_Paths_Relative {
 				'image_paths'         => 'on',
 			);
 
-			update_option( 'make_paths_relative', serialize( $default_activate ) );
+			update_option( 'make_paths_relative', $default_activate );
 		}
 	}
 
@@ -132,8 +130,6 @@ final class Make_Paths_Relative {
 	 *
 	 * @access public
 	 * @since 0.5
-	 *
-	 * @return void
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain(

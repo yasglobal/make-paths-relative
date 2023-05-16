@@ -26,11 +26,13 @@ class Make_Paths_Relative_Settings {
 	 *
 	 * @access private
 	 * @since 0.5
-	 *
-	 * @return void
 	 */
 	private function settings_page() {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['submit'] ) ) {
+			if ( ! isset( $_POST['site_url'] ) ) {
+				$_POST['site_url'] = '';
+			}
 			if ( ! isset( $_POST['post_permalinks'] ) ) {
 				$_POST['post_permalinks'] = '';
 			}
@@ -56,19 +58,21 @@ class Make_Paths_Relative_Settings {
 				$_POST['image_paths'] = '';
 			}
 			$save_settings = array(
-				'site_url'            => $_POST['site_url'],
-				'post_permalinks'     => $_POST['post_permalinks'],
-				'page_permalinks'     => $_POST['page_permalinks'],
-				'archive_permalinks'  => $_POST['archive_permalinks'],
-				'author_permalinks'   => $_POST['author_permalinks'],
-				'category_permalinks' => $_POST['category_permalinks'],
-				'scripts_src'         => $_POST['scripts_src'],
-				'styles_src'          => $_POST['styles_src'],
-				'image_paths'         => $_POST['image_paths'],
+				'site_url'            => sanitize_text_field( wp_unslash( $_POST['site_url'] ) ),
+				'post_permalinks'     => sanitize_text_field( wp_unslash( $_POST['post_permalinks'] ) ),
+				'page_permalinks'     => sanitize_text_field( wp_unslash( $_POST['page_permalinks'] ) ),
+				'archive_permalinks'  => sanitize_text_field( wp_unslash( $_POST['archive_permalinks'] ) ),
+				'author_permalinks'   => sanitize_text_field( wp_unslash( $_POST['author_permalinks'] ) ),
+				'category_permalinks' => sanitize_text_field( wp_unslash( $_POST['category_permalinks'] ) ),
+				'scripts_src'         => sanitize_text_field( wp_unslash( $_POST['scripts_src'] ) ),
+				'styles_src'          => sanitize_text_field( wp_unslash( $_POST['styles_src'] ) ),
+				'image_paths'         => sanitize_text_field( wp_unslash( $_POST['image_paths'] ) ),
 			);
-			update_option( 'make_paths_relative', serialize( $save_settings ) );
+			update_option( 'make_paths_relative', $save_settings );
 		}
-		$settings         = unserialize( get_option( 'make_paths_relative' ) );
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+
+		$settings         = get_option( 'make_paths_relative' );
 		$site_url         = '';
 		$enabled_post     = '';
 		$enabled_page     = '';
@@ -78,34 +82,38 @@ class Make_Paths_Relative_Settings {
 		$enabled_script   = '';
 		$enabled_style    = '';
 		$enabled_image    = '';
+
+		if ( is_string( $settings ) ) {
+			$settings = maybe_unserialize( get_option( 'make_paths_relative' ) );
+		}
+
 		if ( isset( $settings ) ) {
-			if ( isset( $settings['site_url'] )
-				&& ! empty( $settings['site_url'] ) ) {
+			if ( isset( $settings['site_url'] ) && ! empty( $settings['site_url'] ) ) {
 				$site_url = $settings['site_url'];
 			}
-			if ( esc_attr( $settings['post_permalinks'] ) == 'on' ) {
+			if ( 'on' === esc_attr( $settings['post_permalinks'] ) ) {
 				$enabled_post = 'checked';
 			}
 			if ( isset( $settings['page_permalinks'] )
-				&& esc_attr( $settings['page_permalinks'] ) == 'on' ) {
+				&& 'on' === esc_attr( $settings['page_permalinks'] ) ) {
 				$enabled_page = 'checked';
 			}
-			if ( esc_attr( $settings['archive_permalinks'] ) == 'on' ) {
+			if ( 'on' === esc_attr( $settings['archive_permalinks'] ) ) {
 				$enabled_archive = 'checked';
 			}
-			if ( esc_attr( $settings['author_permalinks'] ) == 'on' ) {
+			if ( 'on' === esc_attr( $settings['author_permalinks'] ) ) {
 				$enabled_author = 'checked';
 			}
-			if ( esc_attr( $settings['category_permalinks'] ) == 'on' ) {
+			if ( 'on' === esc_attr( $settings['category_permalinks'] ) ) {
 				$enabled_category = 'checked';
 			}
-			if ( esc_attr( $settings['scripts_src'] ) == 'on' ) {
+			if ( 'on' === esc_attr( $settings['scripts_src'] ) ) {
 				$enabled_script = 'checked';
 			}
-			if ( esc_attr( $settings['styles_src'] ) == 'on' ) {
+			if ( 'on' === esc_attr( $settings['styles_src'] ) ) {
 				$enabled_style = 'checked';
 			}
-			if ( esc_attr( $settings['image_paths'] ) == 'on' ) {
+			if ( 'on' === esc_attr( $settings['image_paths'] ) ) {
 				$enabled_image = 'checked';
 			}
 		}
@@ -127,9 +135,9 @@ class Make_Paths_Relative_Settings {
 								</label>
 							</th>
 							<td>
-								<input type="text" name="site_url" class="regular-text" value="<?php echo $site_url; ?>" />
-								<small><?php printf( esc_html__( 'Default : %s', 'make-paths-relative' ), $print_site_url ); ?></small>
-								<div><?php printf( esc_html__( 'Leave the field empty to use the %s address', 'make-paths-relative' ), '<strong>' . $print_site_url . '</strong>' ); ?></div>
+								<input type="text" name="site_url" class="regular-text" value="<?php echo esc_url( $site_url ); ?>" />
+								<small><?php esc_html_e( 'Default : site_url()', 'make-paths-relative' ); ?></small>
+								<div><?php esc_html_e( 'Leave the field empty to use the site_url() address', 'make-paths-relative' ); ?></div>
 							</td>
 						</tr>
 					</tbody>
@@ -142,31 +150,31 @@ class Make_Paths_Relative_Settings {
 					<tbody>
 						<tr>
 							<td>
-								<input type="checkbox" name="post_permalinks" value="on" <?php echo $enabled_post; ?> />
+								<input type="checkbox" name="post_permalinks" value="on" <?php echo esc_attr( $enabled_post ); ?> />
 								<strong><?php esc_html_e( 'Post Permalinks', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="page_permalinks" value="on" <?php echo $enabled_page; ?> />
+								<input type="checkbox" name="page_permalinks" value="on" <?php echo esc_attr( $enabled_page ); ?> />
 								<strong><?php esc_html_e( 'Page Permalinks', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="archive_permalinks" value="on" <?php echo $enabled_archive; ?> />
+								<input type="checkbox" name="archive_permalinks" value="on" <?php echo esc_attr( $enabled_archive ); ?> />
 								<strong><?php esc_html_e( 'Archive Permalinks', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="author_permalinks" value="on" <?php echo $enabled_author; ?> />
+								<input type="checkbox" name="author_permalinks" value="on" <?php echo esc_attr( $enabled_author ); ?> />
 								<strong><?php esc_html_e( 'Author Permalinks', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="category_permalinks" value="on" <?php echo $enabled_category; ?> />
+								<input type="checkbox" name="category_permalinks" value="on" <?php echo esc_attr( $enabled_category ); ?> />
 								<strong><?php esc_html_e( 'Term Permalinks', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
@@ -180,13 +188,13 @@ class Make_Paths_Relative_Settings {
 					<tbody>
 						<tr>
 							<td>
-								<input type="checkbox" name="scripts_src" value="on" <?php echo $enabled_script; ?> />
+								<input type="checkbox" name="scripts_src" value="on" <?php echo esc_attr( $enabled_script ); ?> />
 								<strong><?php esc_html_e( 'Scripts src', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="styles_src" value="on" <?php echo $enabled_style; ?> />
+								<input type="checkbox" name="styles_src" value="on" <?php echo esc_attr( $enabled_style ); ?> />
 								<strong><?php esc_html_e( 'Styles src', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
@@ -200,7 +208,7 @@ class Make_Paths_Relative_Settings {
 					<tbody>
 						<tr>
 							<td>
-								<input type="checkbox" name="image_paths" value="on" <?php echo $enabled_image; ?> />
+								<input type="checkbox" name="image_paths" value="on" <?php echo esc_attr( $enabled_image ); ?> />
 								<strong><?php esc_html_e( 'Image Paths', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>

@@ -32,8 +32,12 @@ final class Make_Paths_Relative_Frontend {
 	 * Class constructor.
 	 */
 	public function __construct() {
-		$make_relative_paths = unserialize( get_option( 'make_paths_relative' ) );
-		if ( ! isset( $make_relative_paths ) || empty( $make_relative_paths ) ) {
+		$make_relative_paths = get_option( 'make_paths_relative' );
+		if ( is_string( $make_relative_paths ) ) {
+			$make_relative_paths = maybe_unserialize( $make_relative_paths );
+		}
+
+		if ( empty( $make_relative_paths ) ) {
 			return;
 		}
 
@@ -81,11 +85,14 @@ final class Make_Paths_Relative_Frontend {
 
 		$current_post_type = get_post_type();
 		if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
-			$get_exclude_post_types = unserialize(
-				get_option( 'make_paths_relative_exclude' )
-			);
+			$get_exclude_post_types = get_option( 'make_paths_relative_exclude' );
+			if ( is_string( $get_exclude_post_types ) ) {
+				$get_exclude_post_types = maybe_unserialize( $get_exclude_post_types );
+			}
+
 			if ( isset( $get_exclude_post_types['post_types'][ $current_post_type ] )
-				&& $get_exclude_post_types['post_types'][ $current_post_type ] == 'on' ) {
+				&& 'on' === $get_exclude_post_types['post_types'][ $current_post_type ]
+			) {
 				return $link;
 			}
 		}
@@ -144,19 +151,22 @@ final class Make_Paths_Relative_Frontend {
 
 		$current_post_type = get_post_type();
 		if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
-			$get_exclude_post_types = unserialize(
-				get_option( 'make_paths_relative_exclude' )
-			);
+			$get_exclude_post_types = get_option( 'make_paths_relative_exclude' );
+			if ( is_string( $get_exclude_post_types ) ) {
+				$get_exclude_post_types = maybe_unserialize( $get_exclude_post_types );
+			}
+
 			if ( isset( $get_exclude_post_types['post_types'][ $current_post_type ] )
-				&& $get_exclude_post_types['post_types'][ $current_post_type ] == 'on' ) {
+				&& 'on' === $get_exclude_post_types['post_types'][ $current_post_type ]
+			) {
 				return $link;
 			}
 		}
 
-		if ( 'attachment' == $current_post_type && isset( $post->post_type )
-			&& 'post' == $post->post_type ) {
+		if ( 'attachment' === $current_post_type && isset( $post->post_type )
+			&& 'post' === $post->post_type ) {
 			$attachment = get_post( get_the_ID() );
-			if ( isset( $attachment->post_parent ) && 0 != $attachment->post_parent
+			if ( isset( $attachment->post_parent ) && 0 !== $attachment->post_parent
 				&& $post->ID === $attachment->post_parent ) {
 				return $link;
 			}
@@ -190,20 +200,17 @@ final class Make_Paths_Relative_Frontend {
 	 *
 	 * @param array $make_relative_paths Options which is selected in the from
 	 *                                   Plugin Settings Page.
-	 *
-	 * @return void
 	 */
 	private function make_paths_relative_applied( $make_relative_paths ) {
 		// Check if current requested URL contains `sitemap.xml`.
-		if ( isset( $_SERVER )
-			&& false !== strpos( $_SERVER['REQUEST_URI'], 'sitemap.xml' )
-		) {
-			$url_path = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
-			// Check if current requested path contains `sitemap.xml`.
-			if ( isset( $url_path )
-				&& false !== strpos( $url_path, 'sitemap.xml' )
-			) {
-				return;
+		if ( isset( $_SERVER, $_SERVER['REQUEST_URI'] ) ) {
+			$request_uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+			if ( false !== strpos( $request_uri, 'sitemap.xml' ) ) {
+				$url_path = wp_parse_url( $request_uri, PHP_URL_PATH );
+				// Check if current requested path contains `sitemap.xml`.
+				if ( isset( $url_path ) && false !== strpos( $url_path, 'sitemap.xml' ) ) {
+					return;
+				}
 			}
 		}
 
@@ -345,11 +352,13 @@ final class Make_Paths_Relative_Frontend {
 
 		$current_post_type = get_post_type();
 		if ( isset( $current_post_type ) && ! empty( $current_post_type ) ) {
-			$get_exclude_post_types = unserialize(
-				get_option( 'make_paths_relative_exclude' )
-			);
+			$get_exclude_post_types = get_option( 'make_paths_relative_exclude' );
+			if ( is_string( $get_exclude_post_types ) ) {
+				$get_exclude_post_types = maybe_unserialize( $get_exclude_post_types );
+			}
+
 			if ( isset( $get_exclude_post_types['post_types'][ $current_post_type ] )
-				&& $get_exclude_post_types['post_types'][ $current_post_type ] == 'on'
+				&& 'on' === $get_exclude_post_types['post_types'][ $current_post_type ]
 			) {
 				return $image_srcset;
 			}
@@ -383,20 +392,20 @@ final class Make_Paths_Relative_Frontend {
 	}
 
 	/**
-   * Make cleaned URL to relative.
-   *
-   * @access public
-   * @since 1.3.0
-   *
+	 * Make cleaned URL to relative.
+	 *
+	 * @access public
+	 * @since 1.3.0
+	 *
 	 * @param string $good_protocol_url The cleaned URL to be returned.
-   * @param string $original_url      The URL prior to cleaning.
-   * @param string $_context          If 'display', replace ampersands and single quotes only.
-   *
-   * @return string Return Absolute Permalink.
-   */
-  public function clean_url( $good_protocol_url, $original_url, $_context ) {
-    return $this->make_paths_relative_remove( $good_protocol_url, false );
-  }
+	 * @param string $original_url      The URL prior to cleaning.
+	 * @param string $_context          If 'display', replace ampersands and single quotes only.
+	 *
+	 * @return string Return Absolute Permalink.
+	 */
+	public function clean_url( $good_protocol_url, $original_url, $_context ) {
+		return $this->make_paths_relative_remove( $good_protocol_url, false );
+	}
 
 	/**
 	 * Make URL Absolute for Post Types to build Proper Sitemap using Yoast Filter.
@@ -409,8 +418,8 @@ final class Make_Paths_Relative_Frontend {
 	 * @return string Return Absolute Permalink.
 	 */
 	public function sitemap_post_url( $post_permalink ) {
-		if ( strpos( $post_permalink, $this->site_url ) === false
-			&& isset( $post_permalink[0] ) && $post_permalink[0] == '/'
+		if ( false === strpos( $post_permalink, $this->site_url )
+			&& isset( $post_permalink[0] ) && '/' === $post_permalink[0]
 		) {
 			return $this->site_url . $post_permalink;
 		}
