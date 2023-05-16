@@ -64,12 +64,18 @@ final class Make_Paths_Relative_Frontend {
 	 * @since 0.2
 	 *
 	 * @param string $link Permalink which is going to be shown.
+	 * @param bool   $feed Whether to check to feed or not.
 	 *
 	 * @return string Return the Relative Permalink
 	 */
-	public function make_paths_relative_remove( $link ) {
+	public function make_paths_relative_remove( $link, $feed = true ) {
 		// Don't do anything if the current query is for a feed.
-		if ( is_feed() ) {
+		if ( $feed && is_feed() ) {
+			return $link;
+		}
+
+		// Don't do anything if the Product export action exists.
+		if ( has_action( 'wp_ajax_woocommerce_do_ajax_product_export' ) ) {
 			return $link;
 		}
 
@@ -119,6 +125,11 @@ final class Make_Paths_Relative_Frontend {
 	public function relative_post_urls( $link, $post, $leavename = false ) {
 		// Don't do anything if the current query is for a feed.
 		if ( is_feed() ) {
+			return $link;
+		}
+
+		// Don't do anything if the Product export action exists.
+		if ( has_action( 'wp_ajax_woocommerce_do_ajax_product_export' ) ) {
 			return $link;
 		}
 
@@ -307,6 +318,8 @@ final class Make_Paths_Relative_Frontend {
 				100
 			);
 		}
+
+		add_filter( 'clean_url', array( $this, 'clean_url' ), 100, 3 );
 	}
 
 	/**
@@ -322,6 +335,11 @@ final class Make_Paths_Relative_Frontend {
 	public function make_paths_relative_remove_srcset( $image_srcset ) {
 		// Don't do anything if the current query is for a feed.
 		if ( is_feed() ) {
+			return $image_srcset;
+		}
+
+		// Don't do anything if the Product export action exists.
+		if ( has_action( 'wp_ajax_woocommerce_do_ajax_product_export' ) ) {
 			return $image_srcset;
 		}
 
@@ -363,6 +381,22 @@ final class Make_Paths_Relative_Frontend {
 
 		return $image_srcset;
 	}
+
+	/**
+   * Make cleaned URL to relative.
+   *
+   * @access public
+   * @since 1.3.0
+   *
+	 * @param string $good_protocol_url The cleaned URL to be returned.
+   * @param string $original_url      The URL prior to cleaning.
+   * @param string $_context          If 'display', replace ampersands and single quotes only.
+   *
+   * @return string Return Absolute Permalink.
+   */
+  public function clean_url( $good_protocol_url, $original_url, $_context ) {
+    return $this->make_paths_relative_remove( $good_protocol_url, false );
+  }
 
 	/**
 	 * Make URL Absolute for Post Types to build Proper Sitemap using Yoast Filter.
