@@ -58,13 +58,21 @@ class Make_Paths_Relative_Admin {
 			'make-paths-relative-settings',
 			array( $this, 'admin_settings_page' )
 		);
+		$settings_old  = add_submenu_page(
+			'make-paths-relative-settings',
+			'Make Paths Relative Settings (Deprecated)',
+			'Settings (Deprecated)',
+			'administrator',
+			'make-paths-relative-settings-deprecated',
+			array( $this, 'admin_settings_page_deprecated' )
+		);
 		$excluded_page = add_submenu_page(
 			'make-paths-relative-settings',
-			'Exclude Posts',
-			'Exclude Posts',
+			'Exclude Posts (Deprecated)',
+			'Exclude Posts (Deprecated)',
 			'administrator',
-			'make-paths-relative-exclude-posts',
-			array( $this, 'exclude_posts_page' )
+			'make-paths-relative-exclude-posts-deprecated',
+			array( $this, 'exclude_posts_page_deprecated' )
 		);
 		$about_page    = add_submenu_page(
 			'make-paths-relative-settings',
@@ -77,6 +85,10 @@ class Make_Paths_Relative_Admin {
 
 		add_action(
 			'admin_print_styles-' . $settings_page . '',
+			array( $this, 'add_settings_page_style' )
+		);
+		add_action(
+			'admin_print_styles-' . $settings_old . '',
 			array( $this, 'add_settings_page_style' )
 		);
 		add_action(
@@ -130,8 +142,6 @@ class Make_Paths_Relative_Admin {
 	 *
 	 * @access public
 	 * @since 0.2
-	 *
-	 * @return void
 	 */
 	public function admin_settings_page() {
 		include_once MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-settings.php';
@@ -141,16 +151,27 @@ class Make_Paths_Relative_Admin {
 	}
 
 	/**
+	 * Calls another Function which shows the Old Settings content.
+	 *
+	 * @access public
+	 * @since 0.2
+	 */
+	public function admin_settings_page_deprecated() {
+		include_once MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-settings-deprecated.php';
+		new Make_Paths_Relative_Settings_Deprecated();
+
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+	}
+
+	/**
 	 * Calls another Function to show list of PostTypes.
 	 *
 	 * @access public
 	 * @since 0.5
-	 *
-	 * @return void
 	 */
-	public function exclude_posts_page() {
-		include_once MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-exclude.php';
-		new Make_Paths_Relative_Exclude();
+	public function exclude_posts_page_deprecated() {
+		include_once MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-exclude-deprecated.php';
+		new Make_Paths_Relative_Exclude_Deprecated();
 
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
 	}

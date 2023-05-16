@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Avoid making paths relative for the excluded Post Types.
  */
-class Make_Paths_Relative_Exclude {
+class Make_Paths_Relative_Exclude_Deprecated {
 	/**
 	 * Class constructor.
 	 */
