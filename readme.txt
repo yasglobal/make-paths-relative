@@ -100,10 +100,12 @@ A. Yes, You can exclude the items by using the add_filter (You can find the filt
 
 == Changelog ==
 
-= 1.3.0 - Dec 23, 2021 =
+= - June 30, 2023 =
 
   * Bug
-    * [Make exception for WooCommerce exported CSV file](https://wordpress.org/support/topic/make-exception-for-woocommerce-exported-csv-file/)
+    * [function clean_url conflict](https://wordpress.org/support/topic/function-clean_url-conflict/)
+		* [Compatibility problem with v.1.3.0 and WPForms](https://wordpress.org/support/topic/compatibility-problem-with-v-1-3-0-and-wpforms/)
+		* [meta twitter:image not working well with Yoast](https://wordpress.org/support/topic/meta-twitterimage-not-working-well-with-yoast/)
   * Enhancements
     * [Added support for `esc_url()`](https://wordpress.org/support/topic/add-for-esc_url/)
 
