@@ -325,8 +325,6 @@ final class Make_Paths_Relative_Frontend {
 				100
 			);
 		}
-
-		add_filter( 'clean_url', array( $this, 'clean_url' ), 100, 3 );
 	}
 
 	/**
@@ -389,22 +387,6 @@ final class Make_Paths_Relative_Frontend {
 		}
 
 		return $image_srcset;
-	}
-
-	/**
-	 * Make cleaned URL to relative.
-	 *
-	 * @access public
-	 * @since 1.3.0
-	 *
-	 * @param string $good_protocol_url The cleaned URL to be returned.
-	 * @param string $original_url      The URL prior to cleaning.
-	 * @param string $_context          If 'display', replace ampersands and single quotes only.
-	 *
-	 * @return string Return Absolute Permalink.
-	 */
-	public function clean_url( $good_protocol_url, $original_url, $_context ) {
-		return $this->make_paths_relative_remove( $good_protocol_url, false );
 	}
 
 	/**
