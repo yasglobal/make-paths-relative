@@ -37,50 +37,53 @@ class Make_Paths_Relative_Settings {
 			)
 		) {
 			$mps_settings = array(
-				'relative_domains' => array(),
-				'hyperlinks'       => 0,
-				'images_source'    => 0,
-				'scripts_source'   => 0,
-				'styles_source'    => 0,
+				'internal_domains' => array(),
+				'sources'          => array(
+					'remove_domain' => array(
+						'links'       => 0,
+						'images'      => 0,
+						'scripts'     => 0,
+						'stylesheets' => 0,
+					),
+				),
 			);
 
-			$relative_domains = filter_input( INPUT_POST, 'relative_domains' );
-			$relative_domains = str_replace( 'http://', '', $relative_domains );
-			$relative_domains = str_replace( 'https://', '', $relative_domains );
-			$relative_domains = str_replace( '://', '', $relative_domains );
-			$strip_domains    = wp_kses( $relative_domains, array() );
+			$internal_domains = filter_input( INPUT_POST, 'internal_domains' );
+			$internal_domains = preg_replace( '/(http:\/\/|https:\/\/|\/\/)/i', '', $internal_domains );
+			$strip_domains    = wp_kses( $internal_domains, array() );
 			$strip_domains    = explode( "\n", $strip_domains );
 			foreach ( $strip_domains as $domain ) {
 				$domain = trim( $domain );
 				$domain = rtrim( $domain, '/' );
-				if ( ! empty( $domain ) && ! in_array( $domain, $mps_settings['relative_domains'], true ) ) {
-					$mps_settings['relative_domains'][] = $domain;
+				if ( ! empty( $domain ) && ! in_array( $domain, $mps_settings['internal_domains'], true ) ) {
+					$mps_settings['internal_domains'][] = $domain;
 				}
 			}
 
 			$enable_hyperlinks = (int) filter_input( INPUT_POST, 'hyperlinks' );
 			if ( 1 === $enable_hyperlinks ) {
-				$mps_settings['hyperlinks'] = 1;
+				$mps_settings['sources']['remove_domain']['links'] = 1;
 			}
 
 			$enable_images = (int) filter_input( INPUT_POST, 'images_source' );
 			if ( 1 === $enable_images ) {
-				$mps_settings['images_source'] = 1;
+				$mps_settings['sources']['remove_domain']['images'] = 1;
 			}
 
 			$enable_scripts = (int) filter_input( INPUT_POST, 'scripts_source' );
 			if ( 1 === $enable_scripts ) {
-				$mps_settings['scripts_source'] = 1;
+				$mps_settings['sources']['remove_domain']['scripts'] = 1;
 			}
 
 			$enable_styles = (int) filter_input( INPUT_POST, 'styles_source' );
 			if ( 1 === $enable_styles ) {
-				$mps_settings['styles_source'] = 1;
+				$mps_settings['sources']['remove_domain']['stylesheets'] = 1;
 			}
 
-			update_option( 'make_paths_relative_settings', $mps_settings );
+			update_option( 'make_paths_relative_settings', $mps_settings, false );
 
-			if ( isset( $_POST['deprecated_settings'] ) ) {
+			// Remove Deprecated settings if exists.
+			if ( get_option( 'make_paths_relative' ) ) {
 				delete_option( 'make_paths_relative' );
 				delete_option( 'make_paths_relative_exclude' );
 			}
@@ -100,41 +103,49 @@ class Make_Paths_Relative_Settings {
 		$get_mps_settings   = get_option( 'make_paths_relative_settings' );
 		$hyperlinks_enabled = '';
 		$images_enabled     = '';
-		$old_mps_settings   = get_option( 'make_paths_relative' );
+		$internal_domains   = array();
 		$scripts_enabled    = '';
 		$styles_enabled     = '';
 		$user_id            = get_current_user_id();
 
 		if ( is_array( $get_mps_settings ) ) {
-			if ( isset( $get_mps_settings['hyperlinks'] )
-				&& 1 === (int) $get_mps_settings['hyperlinks']
-			) {
-				$hyperlinks_enabled = 'checked';
+			if ( isset( $get_mps_settings['internal_domains'] ) ) {
+				$internal_domains = $get_mps_settings['internal_domains'];
 			}
 
-			if ( isset( $get_mps_settings['images_source'] )
-				&& 1 === (int) $get_mps_settings['images_source']
-			) {
-				$images_enabled = 'checked';
-			}
+			if ( isset( $get_mps_settings['sources'], $get_mps_settings['sources']['remove_domain'] ) ) {
+				$remove_domain_sources = $get_mps_settings['sources']['remove_domain'];
+				if ( isset( $remove_domain_sources['images'] )
+					&& 1 === (int) $remove_domain_sources['images']
+				) {
+					$images_enabled = 'checked';
+				}
 
-			if ( isset( $get_mps_settings['scripts_source'] )
-				&& 1 === (int) $get_mps_settings['scripts_source']
-			) {
-				$scripts_enabled = 'checked';
-			}
+				if ( isset( $remove_domain_sources['links'] )
+					&& 1 === (int) $remove_domain_sources['links']
+				) {
+					$hyperlinks_enabled = 'checked';
+				}
 
-			if ( isset( $get_mps_settings['styles_source'] )
-				&& 1 === (int) $get_mps_settings['styles_source']
-			) {
-				$styles_enabled = 'checked';
+				if ( isset( $remove_domain_sources['scripts'] )
+					&& 1 === (int) $remove_domain_sources['scripts']
+				) {
+					$scripts_enabled = 'checked';
+				}
+
+				if ( isset( $remove_domain_sources['stylesheets'] )
+					&& 1 === (int) $remove_domain_sources['stylesheets']
+				) {
+					$styles_enabled = 'checked';
+				}
 			}
 		}
 		?>
+
 		<div class="wrap">
 			<h2><?php esc_html_e( 'Make Paths Relative', 'make-paths-relative' ); ?></h2>
 			<div>
-				<?php esc_html_e( 'Select which paths you want to make relative.', 'make-paths-relative' ); ?>
+				<?php esc_html_e( 'Mark the paths/URLs that should be treated as internal links.', 'make-paths-relative' ); ?>
 			</div>
 			<form enctype="multipart/form-data" action="" method="POST" id="make-paths-relative">
 				<?php
@@ -150,14 +161,9 @@ class Make_Paths_Relative_Settings {
 					</caption>
 					<tbody>
 						<tr>
-							<th>
-								<label for="relative_domains">
-									<?php esc_html_e( 'Site Addresses :', 'make-paths-relative' ); ?>
-								</label>
-							</th>
 							<td>
-								<textarea id="relative_domains" name="relative_domains" placeholder="Add URL(s) need to be relative without http / https. Like: www.yasglobal.com" rows="5" cols="100"><?php echo esc_html( implode( "\n", $get_mps_settings['relative_domains'] ) ); ?></textarea>
-								<div><?php esc_html_e( 'Leave the field empty to use the site_url() address or add address(es) one in each line.', 'make-paths-relative' ); ?></div>
+								<textarea id="internal_domains" name="internal_domains" placeholder="List internal domain names, one per line, excluding the http or https prefix." rows="10" cols="100"><?php echo esc_html( implode( "\n", $internal_domains ) ); ?></textarea>
+								<div><?php esc_html_e( 'Leave the field blank to use the website\'s main address. Otherwise, enter each address on a separate line.', 'make-paths-relative' ); ?></div>
 							</td>
 						</tr>
 					</tbody>
@@ -202,24 +208,6 @@ class Make_Paths_Relative_Settings {
 						</tr>
 					</tbody>
 				</table>
-
-				<?php if ( ! empty( $old_mps_settings ) ) :?>
-					<table class="make-paths-relative">
-						<caption>
-							<?php esc_html_e( 'Settings (Deprecated)', 'make-paths-relative' ); ?>
-						</caption>
-						<tbody>
-							<tr>
-								<td>
-									<input type="checkbox" id="deprecated_settings" name="deprecated_settings" value="1" />
-									<label for="deprecated_settings">
-										<?php esc_html_e( 'Remove (Recommended)', 'make-paths-relative' ); ?>
-									</label>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				<?php endif; ?>
 
 				<p class="submit">
 					<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_html_e( 'Save Changes', 'make-paths-relative' ); ?>" />

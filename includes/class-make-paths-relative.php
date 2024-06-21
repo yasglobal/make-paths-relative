@@ -35,8 +35,6 @@ final class Make_Paths_Relative {
 	 *
 	 * @access private
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	private function define_constants() {
 		$this->define(
@@ -70,8 +68,6 @@ final class Make_Paths_Relative {
 	 *
 	 * @access private
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	private function includes() {
 		include_once MAKE_PATHS_RELATIVE_PATH . 'includes/class-make-paths-relative-frontend.php';

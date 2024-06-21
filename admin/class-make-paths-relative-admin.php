@@ -58,22 +58,6 @@ class Make_Paths_Relative_Admin {
 			'make-paths-relative-settings',
 			array( $this, 'admin_settings_page' )
 		);
-		$settings_old  = add_submenu_page(
-			'make-paths-relative-settings',
-			'Make Paths Relative Settings (Deprecated)',
-			'Settings (Deprecated)',
-			'administrator',
-			'make-paths-relative-settings-deprecated',
-			array( $this, 'admin_settings_page_deprecated' )
-		);
-		$excluded_page = add_submenu_page(
-			'make-paths-relative-settings',
-			'Exclude Posts (Deprecated)',
-			'Exclude Posts (Deprecated)',
-			'administrator',
-			'make-paths-relative-exclude-posts-deprecated',
-			array( $this, 'exclude_posts_page_deprecated' )
-		);
 		$about_page    = add_submenu_page(
 			'make-paths-relative-settings',
 			'About',
@@ -88,10 +72,6 @@ class Make_Paths_Relative_Admin {
 			array( $this, 'add_settings_page_style' )
 		);
 		add_action(
-			'admin_print_styles-' . $settings_old . '',
-			array( $this, 'add_settings_page_style' )
-		);
-		add_action(
 			'admin_print_styles-' . $about_page . '',
 			array( $this, 'add_about_style' )
 		);
@@ -102,8 +82,6 @@ class Make_Paths_Relative_Admin {
 	 *
 	 * @access public
 	 * @since 2.0.0
-	 *
-	 * @return void
 	 */
 	public function add_about_style() {
 		wp_enqueue_style(
@@ -122,8 +100,6 @@ class Make_Paths_Relative_Admin {
 	 *
 	 * @access public
 	 * @since 2.0.0
-	 *
-	 * @return void
 	 */
 	public function add_settings_page_style() {
 		wp_enqueue_style(
@@ -151,38 +127,10 @@ class Make_Paths_Relative_Admin {
 	}
 
 	/**
-	 * Calls another Function which shows the Old Settings content.
-	 *
-	 * @access public
-	 * @since 0.2
-	 */
-	public function admin_settings_page_deprecated() {
-		include_once MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-settings-deprecated.php';
-		new Make_Paths_Relative_Settings_Deprecated();
-
-		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
-	}
-
-	/**
-	 * Calls another Function to show list of PostTypes.
-	 *
-	 * @access public
-	 * @since 0.5
-	 */
-	public function exclude_posts_page_deprecated() {
-		include_once MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-exclude-deprecated.php';
-		new Make_Paths_Relative_Exclude_Deprecated();
-
-		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
-	}
-
-	/**
 	 * Add About Plugins Page
 	 *
 	 * @access public
 	 * @since 0.5.6
-	 *
-	 * @return void
 	 */
 	public function about_plugin() {
 		include_once MAKE_PATHS_RELATIVE_PATH . 'admin/class-make-paths-relative-about.php';
@@ -197,23 +145,18 @@ class Make_Paths_Relative_Admin {
 	 * @access public
 	 * @since 0.5.1
 	 *
-	 * @return string Shows version, website link and twitter.
+	 * @return string Shows version, forum link and LinkedIn Link.
 	 */
 	public function admin_footer_text() {
-		$footer_text = __( 'Make Paths Relative version', 'make-paths-relative' ) .
-		' ' . MAKE_PATHS_RELATIVE_VERSION . ' ' .
-		__( 'by', 'make-paths-relative' ) .
-		' <a href="https://www.yasglobal.com/" target="_blank">' .
-			__( 'Sami Ahmed Siddiqui', 'make-paths-relative' ) .
-		'</a>' .
-		' - ' .
+		$footer_text = __( 'Need help with Make Paths Relative ', 'make-paths-relative' ) .
+		MAKE_PATHS_RELATIVE_VERSION .
+		__( '? Find support in ', 'make-paths-relative' ) .
 		'<a href="https://wordpress.org/support/plugin/make-paths-relative" target="_blank">' .
-			__( 'Support forums', 'make-paths-relative' ) .
+			__( 'forums', 'make-paths-relative' ) .
 		'</a>' .
-		' - ' .
-		'Follow on Twitter:' .
-		' <a href="https://twitter.com/samisiddiqui91" target="_blank">' .
-			__( 'Sami Ahmed Siddiqui', 'make-paths-relative' ) .
+		__( ' or connect with developer on ', 'make-paths-relative' ) .
+		' <a href="https://www.linkedin.com/in/sami-ahmed-siddiqui/" target="_blank">' .
+			__( 'LinkedIn', 'make-paths-relative' ) .
 		'</a>';
 
 		return $footer_text;
@@ -240,7 +183,7 @@ class Make_Paths_Relative_Admin {
 		$contact_link = sprintf(
 			// translators: %s replaced with the link.
 			__( '<a href="%s" title="Contact">Contact</a>', 'make-paths-relative' ),
-			'https://www.yasglobal.com/#request-form'
+			'https://www.linkedin.com/in/sami-ahmed-siddiqui/'
 		);
 		$settings_link = sprintf(
 			// translators: %s replaced with the link.
