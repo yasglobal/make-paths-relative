@@ -40,8 +40,7 @@ class Make_Paths_Relative_Settings {
 				'internal_domains' => array(),
 				'sources'          => array(
 					'remove_domain' => array(
-						'links'       => 0,
-						'images'      => 0,
+						'body'        => 0,
 						'scripts'     => 0,
 						'stylesheets' => 0,
 					),
@@ -65,9 +64,9 @@ class Make_Paths_Relative_Settings {
 				$mps_settings['sources']['remove_domain']['links'] = 1;
 			}
 
-			$enable_images = (int) filter_input( INPUT_POST, 'images_source' );
-			if ( 1 === $enable_images ) {
-				$mps_settings['sources']['remove_domain']['images'] = 1;
+			$enable_body = (int) filter_input( INPUT_POST, 'body_content' );
+			if ( 1 === $enable_body ) {
+				$mps_settings['sources']['remove_domain']['body'] = 1;
 			}
 
 			$enable_scripts = (int) filter_input( INPUT_POST, 'scripts_source' );
@@ -100,9 +99,9 @@ class Make_Paths_Relative_Settings {
 	private function settings_page() {
 		$this->save_settings();
 
+		$body_enabled       = '';
 		$get_mps_settings   = get_option( 'make_paths_relative_settings' );
 		$hyperlinks_enabled = '';
-		$images_enabled     = '';
 		$internal_domains   = array();
 		$scripts_enabled    = '';
 		$styles_enabled     = '';
@@ -115,10 +114,10 @@ class Make_Paths_Relative_Settings {
 
 			if ( isset( $get_mps_settings['sources'], $get_mps_settings['sources']['remove_domain'] ) ) {
 				$remove_domain_sources = $get_mps_settings['sources']['remove_domain'];
-				if ( isset( $remove_domain_sources['images'] )
-					&& 1 === (int) $remove_domain_sources['images']
+				if ( isset( $remove_domain_sources['body'] )
+					&& 1 === (int) $remove_domain_sources['body']
 				) {
-					$images_enabled = 'checked';
+					$body_enabled = 'checked';
 				}
 
 				if ( isset( $remove_domain_sources['links'] )
@@ -176,17 +175,10 @@ class Make_Paths_Relative_Settings {
 					<tbody>
 						<tr>
 							<td>
-								<input type="checkbox" id="hyperlinks" name="hyperlinks" value="1" <?php echo esc_attr( $hyperlinks_enabled ); ?> />
-								<label for="hyperlinks">
-									<?php esc_html_e( 'Hyperlink(s) / URL (s)', 'make-paths-relative' ); ?>
-								</label>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" id="images_source" name="images_source" value="1" <?php echo esc_attr( $images_enabled ); ?> />
-								<label for="images_source">
-									<?php esc_html_e( 'Image(s) URL', 'make-paths-relative' ); ?>
+								<input type="checkbox" id="body_content" name="body_content" value="1" <?php echo esc_attr( $body_enabled ); ?> />
+								<label for="body_content">
+									<?php esc_html_e( 'Body Content', 'make-paths-relative' ); ?>
+									<small>Includes images, links, inline style, script, etc. which comes under <code>&lt;body&gt;</code>tag.</small>
 								</label>
 							</td>
 						</tr>
@@ -194,7 +186,7 @@ class Make_Paths_Relative_Settings {
 							<td>
 								<input type="checkbox" id="scripts_source" name="scripts_source" value="1" <?php echo esc_attr( $scripts_enabled ); ?> />
 								<label for="scripts_source">
-									<?php esc_html_e( 'Script(s) URL', 'make-paths-relative' ); ?>
+									<?php esc_html_e( 'Script(s) under head tag', 'make-paths-relative' ); ?>
 								</label>
 							</td>
 						</tr>
@@ -202,7 +194,7 @@ class Make_Paths_Relative_Settings {
 							<td>
 								<input type="checkbox" id="styles_source" name="styles_source" value="1" <?php echo esc_attr( $styles_enabled ); ?> />
 								<label for="styles_source">
-									<?php esc_html_e( 'Style(s) URL', 'make-paths-relative' ); ?>
+									<?php esc_html_e( 'Stylesheet(s) under head tag', 'make-paths-relative' ); ?>
 								</label>
 							</td>
 						</tr>
