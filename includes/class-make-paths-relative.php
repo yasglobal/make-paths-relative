@@ -19,7 +19,7 @@ final class Make_Paths_Relative {
 	 *
 	 * @var string
 	 */
-	public $version = '1.3.0';
+	public $version = '2.0.0';
 
 	/**
 	 * Class constructor.
@@ -35,8 +35,6 @@ final class Make_Paths_Relative {
 	 *
 	 * @access private
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	private function define_constants() {
 		$this->define(
@@ -70,8 +68,6 @@ final class Make_Paths_Relative {
 	 *
 	 * @access private
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	private function includes() {
 		include_once MAKE_PATHS_RELATIVE_PATH . 'includes/class-make-paths-relative-frontend.php';
@@ -110,18 +106,17 @@ final class Make_Paths_Relative {
 	public static function plugin_activate() {
 		if ( 1 === (int) apply_filters( 'make_paths_relative_activate_all', '__false' ) ) {
 			$default_activate = array(
-				'site_url'            => '',
-				'post_permalinks'     => 'on',
-				'page_permalinks'     => 'on',
-				'archive_permalinks'  => 'on',
-				'author_permalinks'   => 'on',
-				'category_permalinks' => 'on',
-				'scripts_src'         => 'on',
-				'styles_src'          => 'on',
-				'image_paths'         => 'on',
+				'internal_domains' => array(),
+				'sources'          => array(
+					'remove_domain' => array(
+						'body'        => 1,
+						'scripts'     => 1,
+						'stylesheets' => 1,
+					),
+				),
 			);
 
-			update_option( 'make_paths_relative', $default_activate );
+			update_option( 'make_paths_relative_settings', $default_activate );
 		}
 	}
 

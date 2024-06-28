@@ -21,195 +21,174 @@ class Make_Paths_Relative_Settings {
 	}
 
 	/**
+	 * Save make paths relative Settings.
+	 *
+	 * @access private
+	 * @since 2.0.0
+	 */
+	private function save_settings() {
+		$form_submit = filter_input( INPUT_POST, 'submit' );
+		$user_id     = get_current_user_id();
+
+		if ( $form_submit
+			&& check_admin_referer(
+				'make-paths-relative-settings_' . $user_id,
+				'_make_paths_relative_settings_nonce'
+			)
+		) {
+			$mps_settings = array(
+				'internal_domains' => array(),
+				'sources'          => array(
+					'remove_domain' => array(
+						'body'        => 0,
+						'scripts'     => 0,
+						'stylesheets' => 0,
+					),
+				),
+			);
+
+			$internal_domains = filter_input( INPUT_POST, 'internal_domains' );
+			$internal_domains = preg_replace( '/(http:\/\/|https:\/\/|\/\/)/i', '', $internal_domains );
+			$strip_domains    = wp_kses( $internal_domains, array() );
+			$strip_domains    = explode( "\n", $strip_domains );
+			foreach ( $strip_domains as $domain ) {
+				$domain = trim( $domain );
+				$domain = rtrim( $domain, '/' );
+				if ( ! empty( $domain ) && ! in_array( $domain, $mps_settings['internal_domains'], true ) ) {
+					$mps_settings['internal_domains'][] = $domain;
+				}
+			}
+
+			$enable_hyperlinks = (int) filter_input( INPUT_POST, 'hyperlinks' );
+			if ( 1 === $enable_hyperlinks ) {
+				$mps_settings['sources']['remove_domain']['links'] = 1;
+			}
+
+			$enable_body = (int) filter_input( INPUT_POST, 'body_content' );
+			if ( 1 === $enable_body ) {
+				$mps_settings['sources']['remove_domain']['body'] = 1;
+			}
+
+			$enable_scripts = (int) filter_input( INPUT_POST, 'scripts_source' );
+			if ( 1 === $enable_scripts ) {
+				$mps_settings['sources']['remove_domain']['scripts'] = 1;
+			}
+
+			$enable_styles = (int) filter_input( INPUT_POST, 'styles_source' );
+			if ( 1 === $enable_styles ) {
+				$mps_settings['sources']['remove_domain']['stylesheets'] = 1;
+			}
+
+			update_option( 'make_paths_relative_settings', $mps_settings, false );
+
+			// Remove Deprecated settings if exists.
+			if ( get_option( 'make_paths_relative' ) ) {
+				delete_option( 'make_paths_relative' );
+				delete_option( 'make_paths_relative_exclude' );
+			}
+		}
+	}
+
+	/**
 	 * Settings Page by which Admin can change/choose the appropriate settings
 	 * according to their need.
 	 *
 	 * @access private
-	 * @since 0.5
+	 * @since 2.0.0
 	 */
 	private function settings_page() {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		if ( isset( $_POST['submit'] ) ) {
-			if ( ! isset( $_POST['site_url'] ) ) {
-				$_POST['site_url'] = '';
-			}
-			if ( ! isset( $_POST['post_permalinks'] ) ) {
-				$_POST['post_permalinks'] = '';
-			}
-			if ( ! isset( $_POST['page_permalinks'] ) ) {
-				$_POST['page_permalinks'] = '';
-			}
-			if ( ! isset( $_POST['archive_permalinks'] ) ) {
-				$_POST['archive_permalinks'] = '';
-			}
-			if ( ! isset( $_POST['author_permalinks'] ) ) {
-				$_POST['author_permalinks'] = '';
-			}
-			if ( ! isset( $_POST['category_permalinks'] ) ) {
-				$_POST['category_permalinks'] = '';
-			}
-			if ( ! isset( $_POST['scripts_src'] ) ) {
-				$_POST['scripts_src'] = '';
-			}
-			if ( ! isset( $_POST['styles_src'] ) ) {
-				$_POST['styles_src'] = '';
-			}
-			if ( ! isset( $_POST['image_paths'] ) ) {
-				$_POST['image_paths'] = '';
-			}
-			$save_settings = array(
-				'site_url'            => sanitize_text_field( wp_unslash( $_POST['site_url'] ) ),
-				'post_permalinks'     => sanitize_text_field( wp_unslash( $_POST['post_permalinks'] ) ),
-				'page_permalinks'     => sanitize_text_field( wp_unslash( $_POST['page_permalinks'] ) ),
-				'archive_permalinks'  => sanitize_text_field( wp_unslash( $_POST['archive_permalinks'] ) ),
-				'author_permalinks'   => sanitize_text_field( wp_unslash( $_POST['author_permalinks'] ) ),
-				'category_permalinks' => sanitize_text_field( wp_unslash( $_POST['category_permalinks'] ) ),
-				'scripts_src'         => sanitize_text_field( wp_unslash( $_POST['scripts_src'] ) ),
-				'styles_src'          => sanitize_text_field( wp_unslash( $_POST['styles_src'] ) ),
-				'image_paths'         => sanitize_text_field( wp_unslash( $_POST['image_paths'] ) ),
-			);
-			update_option( 'make_paths_relative', $save_settings );
-		}
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		$this->save_settings();
 
-		$settings         = get_option( 'make_paths_relative' );
-		$site_url         = '';
-		$enabled_post     = '';
-		$enabled_page     = '';
-		$enabled_archive  = '';
-		$enabled_author   = '';
-		$enabled_category = '';
-		$enabled_script   = '';
-		$enabled_style    = '';
-		$enabled_image    = '';
+		$body_enabled     = '';
+		$get_mps_settings = get_option( 'make_paths_relative_settings' );
+		$internal_domains = array();
+		$scripts_enabled  = '';
+		$styles_enabled   = '';
+		$user_id          = get_current_user_id();
 
-		if ( is_string( $settings ) ) {
-			$settings = maybe_unserialize( get_option( 'make_paths_relative' ) );
-		}
+		if ( is_array( $get_mps_settings ) ) {
+			if ( isset( $get_mps_settings['internal_domains'] ) ) {
+				$internal_domains = $get_mps_settings['internal_domains'];
+			}
 
-		if ( isset( $settings ) ) {
-			if ( isset( $settings['site_url'] ) && ! empty( $settings['site_url'] ) ) {
-				$site_url = $settings['site_url'];
-			}
-			if ( 'on' === esc_attr( $settings['post_permalinks'] ) ) {
-				$enabled_post = 'checked';
-			}
-			if ( isset( $settings['page_permalinks'] )
-				&& 'on' === esc_attr( $settings['page_permalinks'] ) ) {
-				$enabled_page = 'checked';
-			}
-			if ( 'on' === esc_attr( $settings['archive_permalinks'] ) ) {
-				$enabled_archive = 'checked';
-			}
-			if ( 'on' === esc_attr( $settings['author_permalinks'] ) ) {
-				$enabled_author = 'checked';
-			}
-			if ( 'on' === esc_attr( $settings['category_permalinks'] ) ) {
-				$enabled_category = 'checked';
-			}
-			if ( 'on' === esc_attr( $settings['scripts_src'] ) ) {
-				$enabled_script = 'checked';
-			}
-			if ( 'on' === esc_attr( $settings['styles_src'] ) ) {
-				$enabled_style = 'checked';
-			}
-			if ( 'on' === esc_attr( $settings['image_paths'] ) ) {
-				$enabled_image = 'checked';
+			if ( isset( $get_mps_settings['sources'], $get_mps_settings['sources']['remove_domain'] ) ) {
+				$remove_domain_sources = $get_mps_settings['sources']['remove_domain'];
+				if ( isset( $remove_domain_sources['body'] )
+					&& 1 === (int) $remove_domain_sources['body']
+				) {
+					$body_enabled = 'checked';
+				}
+
+				if ( isset( $remove_domain_sources['scripts'] )
+					&& 1 === (int) $remove_domain_sources['scripts']
+				) {
+					$scripts_enabled = 'checked';
+				}
+
+				if ( isset( $remove_domain_sources['stylesheets'] )
+					&& 1 === (int) $remove_domain_sources['stylesheets']
+				) {
+					$styles_enabled = 'checked';
+				}
 			}
 		}
-		$print_site_url = 'site_url()';
 		?>
+
 		<div class="wrap">
-		<h2><?php esc_html_e( 'Make Paths Relative', 'make-paths-relative' ); ?></h2>
-		<div><?php esc_html_e( 'Select which paths you want to make relative.', 'make-paths-relative' ); ?></div>
+			<h2><?php esc_html_e( 'Make Paths Relative', 'make-paths-relative' ); ?></h2>
+			<div>
+				<?php esc_html_e( 'Mark the paths/URLs that should be treated as internal links.', 'make-paths-relative' ); ?>
+			</div>
 			<form enctype="multipart/form-data" action="" method="POST" id="make-paths-relative">
+				<?php
+				wp_nonce_field(
+					'make-paths-relative-settings_' . $user_id,
+					'_make_paths_relative_settings_nonce',
+					true
+				);
+				?>
 				<table class="make-paths-relative">
 					<caption>
-						<?php esc_html_e( 'Define Site Address', 'make-paths-relative' ); ?>
+						<?php esc_html_e( 'Define Site Addresses', 'make-paths-relative' ); ?>
 					</caption>
 					<tbody>
 						<tr>
-							<th>
-								<label for="name">
-									<?php esc_html_e( 'Site Address :', 'make-paths-relative' ); ?>
+							<td>
+								<textarea id="internal_domains" name="internal_domains" placeholder="List internal domain names, one per line, excluding the http or https prefix." rows="10" cols="100"><?php echo esc_html( implode( "\n", $internal_domains ) ); ?></textarea>
+								<div><?php esc_html_e( 'Leave the field blank to use the website\'s main address. Otherwise, enter each address on a separate line.', 'make-paths-relative' ); ?></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="make-paths-relative">
+					<caption>
+						<?php esc_html_e( 'Make Paths Relative', 'make-paths-relative' ); ?>
+					</caption>
+					<tbody>
+						<tr>
+							<td>
+								<input type="checkbox" id="body_content" name="body_content" value="1" <?php echo esc_attr( $body_enabled ); ?> />
+								<label for="body_content">
+									<?php esc_html_e( 'Body Content', 'make-paths-relative' ); ?>
+									<small>Includes images, links, inline style, script, etc. which comes under <code>&lt;body&gt;</code>tag.</small>
 								</label>
-							</th>
-							<td>
-								<input type="text" name="site_url" class="regular-text" value="<?php echo esc_url( $site_url ); ?>" />
-								<small><?php esc_html_e( 'Default : site_url()', 'make-paths-relative' ); ?></small>
-								<div><?php esc_html_e( 'Leave the field empty to use the site_url() address', 'make-paths-relative' ); ?></div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<table class="make-paths-relative">
-					<caption>
-						<?php esc_html_e( 'Make Permalinks Relative', 'make-paths-relative' ); ?>
-					</caption>
-					<tbody>
-						<tr>
-							<td>
-								<input type="checkbox" name="post_permalinks" value="on" <?php echo esc_attr( $enabled_post ); ?> />
-								<strong><?php esc_html_e( 'Post Permalinks', 'make-paths-relative' ); ?></strong>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="page_permalinks" value="on" <?php echo esc_attr( $enabled_page ); ?> />
-								<strong><?php esc_html_e( 'Page Permalinks', 'make-paths-relative' ); ?></strong>
+								<input type="checkbox" id="scripts_source" name="scripts_source" value="1" <?php echo esc_attr( $scripts_enabled ); ?> />
+								<label for="scripts_source">
+									<?php esc_html_e( 'Script(s) under head tag', 'make-paths-relative' ); ?>
+								</label>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="archive_permalinks" value="on" <?php echo esc_attr( $enabled_archive ); ?> />
-								<strong><?php esc_html_e( 'Archive Permalinks', 'make-paths-relative' ); ?></strong>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" name="author_permalinks" value="on" <?php echo esc_attr( $enabled_author ); ?> />
-								<strong><?php esc_html_e( 'Author Permalinks', 'make-paths-relative' ); ?></strong>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" name="category_permalinks" value="on" <?php echo esc_attr( $enabled_category ); ?> />
-								<strong><?php esc_html_e( 'Term Permalinks', 'make-paths-relative' ); ?></strong>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<table class="make-paths-relative">
-					<caption>
-						<?php esc_html_e( 'Make Scripts and Styles Relative', 'make-paths-relative' ); ?>
-					</caption>
-					<tbody>
-						<tr>
-							<td>
-								<input type="checkbox" name="scripts_src" value="on" <?php echo esc_attr( $enabled_script ); ?> />
-								<strong><?php esc_html_e( 'Scripts src', 'make-paths-relative' ); ?></strong>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" name="styles_src" value="on" <?php echo esc_attr( $enabled_style ); ?> />
-								<strong><?php esc_html_e( 'Styles src', 'make-paths-relative' ); ?></strong>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<table class="make-paths-relative">
-					<caption>
-						<?php esc_html_e( 'Make Image Paths Relative', 'make-paths-relative' ); ?>
-					</caption>
-					<tbody>
-						<tr>
-							<td>
-								<input type="checkbox" name="image_paths" value="on" <?php echo esc_attr( $enabled_image ); ?> />
-								<strong><?php esc_html_e( 'Image Paths', 'make-paths-relative' ); ?></strong>
+								<input type="checkbox" id="styles_source" name="styles_source" value="1" <?php echo esc_attr( $styles_enabled ); ?> />
+								<label for="styles_source">
+									<?php esc_html_e( 'Stylesheet(s) under head tag', 'make-paths-relative' ); ?>
+								</label>
 							</td>
 						</tr>
 					</tbody>
