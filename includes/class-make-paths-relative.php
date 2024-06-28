@@ -106,18 +106,17 @@ final class Make_Paths_Relative {
 	public static function plugin_activate() {
 		if ( 1 === (int) apply_filters( 'make_paths_relative_activate_all', '__false' ) ) {
 			$default_activate = array(
-				'site_url'            => '',
-				'post_permalinks'     => 'on',
-				'page_permalinks'     => 'on',
-				'archive_permalinks'  => 'on',
-				'author_permalinks'   => 'on',
-				'category_permalinks' => 'on',
-				'scripts_src'         => 'on',
-				'styles_src'          => 'on',
-				'image_paths'         => 'on',
+				'internal_domains' => array(),
+				'sources'          => array(
+					'remove_domain' => array(
+						'body'        => 1,
+						'scripts'     => 1,
+						'stylesheets' => 1,
+					),
+				),
 			);
 
-			update_option( 'make_paths_relative', $default_activate );
+			update_option( 'make_paths_relative_settings', $default_activate );
 		}
 	}
 
