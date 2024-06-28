@@ -2,47 +2,25 @@
 
 ## Description
 
-This plugin can make(convert) the paths(URLs) to a relative instead of the absolute.
-This plugin is useful for using relative URLs. The given below list of permalinks and src can
-be easily converted to a relative:
+This powerful plugin simplifies website maintenance by automatically converting absolute paths (URLs) for resources like links, scripts, stylesheets, and images to relative paths. This ensures your website functions flawlessly regardless of its location on a server or domain.
 
-* Post Permalinks
-* Archive Permalinks
-* Author Permalinks
-* Term Permalinks
-* Scripts Paths(src)
-* Styles Paths(src)
-* Image Paths(src)
+### Enhanced Efficiency and Flexibility
 
-All the above permalinks and src can be converted to a relative instead of absolute by using
-this plugin. You can select the options from the plugin settings page.
+- **Seamless Relocation:** Move your website with confidence, knowing all paths will adjust accordingly, preventing broken links and preserving a seamless user - experience.
+- **Centralized Control:** Update paths once in a central location, eliminating the need for tedious, site-wide modifications.
+- **Potential Performance Boost:** Relative paths can, in some cases, improve website loading times.
+
+### Whitelist Your Domains (Optional)
+
+For extra control, you can specify a list of domains that will always be converted to relative paths. This ensures internal links are always optimized while allowing external resources to function properly.
+
+### Embrace a Streamlined Approach
+
+This plugin empowers you to focus on creating exceptional content while eliminating the burden of managing absolute paths. Take control, optimize your workflow, and ensure your website's continued success!
 
 ### Filters
 
-If you want to exclude some Permalink or src to be a relative then you can use
-`paths_relative` filter in your theme's `functions.php` or in your custom plugin.
-
-Your filter may look like this (Below filter would make the jquery.js Path to absolute):
-
-```php
-function yasglobal_change_path( $link ) {
-  if( $link == '/wp-includes/js/jquery/jquery.js?ver=1.12.4' ) {
-    $link = site_url().'/wp-includes/js/jquery/jquery.js?ver=1.12.4';
-  }
-  return $link;
-}
-add_filter( 'paths_relative', 'yasglobal_change_path' );
-```
-
-If you don't want to Make the Paths relative for srcset(Responsive Images) then add the
-below-mentioned line in your theme's `functions.php`.
-
-```php
-add_filter( 'srcset_paths_relative', '__return_false' );
-```
-
-If you want to make plugin works and all the paths relative without going to
-check/visit Settings Page so, just add this line in your theme's `functions.php`.
+If you want to make plugin works and all the paths relative without going to check/visit Settings Page so, just add this line in your theme's `functions.php`.
 
 ```php
 add_filter( 'make_paths_relative_activate_all', '__return_true' );
@@ -52,14 +30,11 @@ add_filter( 'make_paths_relative_activate_all', '__return_true' );
 
 ### Thanks for the Support
 
-The support from the users that love Make Paths Relative is huge. You can support
-Make Paths Relative future development and help to make it even better by giving
-a 5-star rating with a nice message to me :)
+The support from the users that love Make Paths Relative is huge. You can support Make Paths Relative future development and help to make it even better by giving a 5-star rating with a nice message to me :)
 
 ## Installation
 
-This process defines you the steps to follow either you are installing through WordPress
-or Manually from FTP.
+This process defines you the steps to follow either you are installing through WordPress or Manually from FTP.
 
 ### From within WordPress
 
@@ -78,18 +53,3 @@ or Manually from FTP.
 
 1. Go to the plugin settings page and set up the plugin for your site.
 2. You're done!
-
-## Frequently Asked Questions
-
-**Q. Why should I install this plugin?**
-
-A. Installing this plugin is the easiest way to make the paths(Permalinks + src) relative.
-
-**Q. May I select the paths which I want to be shown as relative items?**
-
-A. Yes, You can select the items you want to be relative.
-
-**Q. May I exclude some items to be shown as absolute?**
-
-A. Yes, You can exclude the items by using the add_filter
-(You can find the filters in the [Description Area](https://github.com/yasglobal/make-paths-relative#filters)).

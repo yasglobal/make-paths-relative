@@ -99,13 +99,12 @@ class Make_Paths_Relative_Settings {
 	private function settings_page() {
 		$this->save_settings();
 
-		$body_enabled       = '';
-		$get_mps_settings   = get_option( 'make_paths_relative_settings' );
-		$hyperlinks_enabled = '';
-		$internal_domains   = array();
-		$scripts_enabled    = '';
-		$styles_enabled     = '';
-		$user_id            = get_current_user_id();
+		$body_enabled     = '';
+		$get_mps_settings = get_option( 'make_paths_relative_settings' );
+		$internal_domains = array();
+		$scripts_enabled  = '';
+		$styles_enabled   = '';
+		$user_id          = get_current_user_id();
 
 		if ( is_array( $get_mps_settings ) ) {
 			if ( isset( $get_mps_settings['internal_domains'] ) ) {
@@ -118,12 +117,6 @@ class Make_Paths_Relative_Settings {
 					&& 1 === (int) $remove_domain_sources['body']
 				) {
 					$body_enabled = 'checked';
-				}
-
-				if ( isset( $remove_domain_sources['links'] )
-					&& 1 === (int) $remove_domain_sources['links']
-				) {
-					$hyperlinks_enabled = 'checked';
 				}
 
 				if ( isset( $remove_domain_sources['scripts'] )
