@@ -135,25 +135,12 @@ final class Make_Paths_Relative_Frontend {
 	 * @return string
 	 */
 	public function remove_domain_from_body( $buffer ) {
-		/*
-		$current_host = '';
-		if ( isset( $_SERVER ) ) {
-			if ( isset( $_SERVER['HTTP_HOST'] ) ) {
-				if ( isset( $_SERVER['HTTPS'] ) ) {
-					$current_host = 'https://' . $_SERVER['HTTP_HOST'];
-				} else {
-					$current_host = 'http://' . $_SERVER['HTTP_HOST'];
-				}
-			}
-		}
-		*/
-
 		if ( ! empty( $this->internal_domains ) ) {
 			// Replace body content with dummy string.
 			$output_body_tags = array();
 			preg_match_all( '/<body(.*?)>(.*?)<\/body>/is', $buffer, $output_body_tags );
 
-			$buffer = preg_replace( '/<body(.*?)>(.*?)<\/body>/is', "<body$1>###MAKE_PATHS_RELATIVE_CLEAN_BODY###</body>", $buffer );
+			$buffer = preg_replace( '/<body(.*?)>(.*?)<\/body>/is', '<body$1>###MAKE_PATHS_RELATIVE_CLEAN_BODY###</body>', $buffer );
 			foreach ( $this->internal_domains as $internal_domain ) {
 				if ( isset( $output_body_tags[2], $output_body_tags[2][0] ) ) {
 					$output_body_tags[2][0] = preg_replace(
@@ -166,20 +153,12 @@ final class Make_Paths_Relative_Frontend {
 
 			// Replace dummy string with body content after removing internal domains.
 			if ( isset( $output_body_tags[2], $output_body_tags[2][0] ) ) {
-				$buffer = preg_replace( "/###MAKE_PATHS_RELATIVE_CLEAN_BODY###/", $output_body_tags[2][0], $buffer );
+				$buffer = preg_replace( '/###MAKE_PATHS_RELATIVE_CLEAN_BODY###/', $output_body_tags[2][0], $buffer );
 			}
 		}
 
 		return $buffer;
 	}
-
-	// if ( in_array( 'scripts', $this->remove_domain, true ) ) {
-	// 	$buffer = preg_replace( "/src=(\'|\")(http:\/\/|https:\/\/|\/\/)$internal_domain/is", 'src=$1', $buffer );
-	// }
-
-	// if ( in_array( 'stylesheets', $this->remove_domain, true ) ) {
-	// 	$buffer = preg_replace( "/href=(\'|\")(http:\/\/|https:\/\/|\/\/)$internal_domain/is", 'href=$1', $buffer );
-	// }
 
 	/**
 	 * Send and turn off the buffering on WordPress shutdown hook.
