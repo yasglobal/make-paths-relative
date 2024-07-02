@@ -86,6 +86,19 @@ final class Make_Paths_Relative_Frontend {
 					999999
 				);
 			}
+
+			if ( ( isset( $remove_domain_sources['scripts'] )
+				&& 1 === (int) $remove_domain_sources['scripts']
+				) ||
+				( isset( $remove_domain_sources['stylesheets'] )
+				&& 1 === (int) $remove_domain_sources['stylesheets'] )
+			) {
+				add_filter(
+					'stylesheet_directory_uri',
+					array( $this, 'relative_scripts_styles' ),
+					999999
+				);
+			}
 		}
 	}
 
@@ -135,6 +148,7 @@ final class Make_Paths_Relative_Frontend {
 	 * @return string
 	 */
 	public function remove_domain_from_body( $buffer ) {
+		$original_buffer = $buffer;
 		if ( ! empty( $this->internal_domains ) ) {
 			// Replace body content with dummy string.
 			$output_body_tags = array();
@@ -148,12 +162,31 @@ final class Make_Paths_Relative_Frontend {
 						'',
 						$output_body_tags[2][0]
 					);
+
+					// Replace escaped URL.
+					$output_body_tags[2][0] = str_replace(
+						'http:\/\/' . $internal_domain,
+						'',
+						$output_body_tags[2][0]
+					);
+					$output_body_tags[2][0] = str_replace(
+						'https:\/\/' . $internal_domain,
+						'',
+						$output_body_tags[2][0]
+					);
+					$output_body_tags[2][0] = str_replace(
+						'\/\/' . $internal_domain,
+						'',
+						$output_body_tags[2][0]
+					);
 				}
 			}
 
 			// Replace dummy string with body content after removing internal domains.
 			if ( isset( $output_body_tags[2], $output_body_tags[2][0] ) ) {
 				$buffer = preg_replace( '/###MAKE_PATHS_RELATIVE_CLEAN_BODY###/', $output_body_tags[2][0], $buffer );
+			} else {
+				$buffer = $original_buffer;
 			}
 		}
 
