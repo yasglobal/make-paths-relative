@@ -31,6 +31,10 @@ final class Make_Paths_Relative_Frontend {
 	 * Class constructor.
 	 */
 	public function __construct() {
+		if ( is_admin() ) {
+			return;
+		}
+
 		$make_relative_paths = get_option( 'make_paths_relative_settings' );
 		if ( is_string( $make_relative_paths ) ) {
 			$make_relative_paths = maybe_unserialize( $make_relative_paths );
