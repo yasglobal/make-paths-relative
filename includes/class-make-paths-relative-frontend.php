@@ -167,13 +167,14 @@ final class Make_Paths_Relative_Frontend {
 
 			foreach ( $this->internal_domains as $internal_domain ) {
 				$body_content = preg_replace(
-					'/(http:\/\/|https:\/\/|\/\/)' . $internal_domain . '/is',
+					'/(http:\/\/|https:\/\/|\/\/)' . preg_quote( $internal_domain, '/' ) . '/is',
 					'',
 					$body_content
 				);
 
 				// Replace escaped URL.
-				$body_content = str_replace( 'http:\/\/' . $internal_domain,
+				$body_content = str_replace(
+					'http:\/\/' . $internal_domain,
 					'',
 					$body_content
 				);
