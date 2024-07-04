@@ -152,45 +152,55 @@ final class Make_Paths_Relative_Frontend {
 	 * @return string
 	 */
 	public function remove_domain_from_body( $buffer ) {
-		$original_buffer = $buffer;
 		if ( ! empty( $this->internal_domains ) ) {
-			// Replace body content with dummy string.
-			$output_body_tags = array();
+			// Fetch body content.
+			$body_content = '';
 			preg_match_all( '/<body(.*?)>(.*?)<\/body>/is', $buffer, $output_body_tags );
-
-			$buffer = preg_replace( '/<body(.*?)>(.*?)<\/body>/is', '<body$1>###MAKE_PATHS_RELATIVE_CLEAN_BODY###</body>', $buffer );
-			foreach ( $this->internal_domains as $internal_domain ) {
-				if ( isset( $output_body_tags[2], $output_body_tags[2][0] ) ) {
-					$output_body_tags[2][0] = preg_replace(
-						'/(http:\/\/|https:\/\/|\/\/)' . $internal_domain . '/is',
-						'',
-						$output_body_tags[2][0]
-					);
-
-					// Replace escaped URL.
-					$output_body_tags[2][0] = str_replace(
-						'http:\/\/' . $internal_domain,
-						'',
-						$output_body_tags[2][0]
-					);
-					$output_body_tags[2][0] = str_replace(
-						'https:\/\/' . $internal_domain,
-						'',
-						$output_body_tags[2][0]
-					);
-					$output_body_tags[2][0] = str_replace(
-						'\/\/' . $internal_domain,
-						'',
-						$output_body_tags[2][0]
-					);
-				}
+			if ( isset( $output_body_tags[2], $output_body_tags[2][0] ) ) {
+				$body_content = $output_body_tags[2][0];
 			}
 
-			// Replace dummy string with body content after removing internal domains.
-			if ( isset( $output_body_tags[2], $output_body_tags[2][0] ) ) {
-				$buffer = preg_replace( '/###MAKE_PATHS_RELATIVE_CLEAN_BODY###/', $output_body_tags[2][0], $buffer );
-			} else {
-				$buffer = $original_buffer;
+			// Return same buffer if unable to fetch body content.
+			if ( empty( $body_content ) ) {
+				return $buffer;
+			}
+
+			foreach ( $this->internal_domains as $internal_domain ) {
+				$body_content = preg_replace(
+					'/(http:\/\/|https:\/\/|\/\/)' . $internal_domain . '/is',
+					'',
+					$body_content
+				);
+
+				// Replace escaped URL.
+				$body_content = str_replace( 'http:\/\/' . $internal_domain,
+					'',
+					$body_content
+				);
+				$body_content = str_replace(
+					'https:\/\/' . $internal_domain,
+					'',
+					$body_content
+				);
+				$body_content = str_replace(
+					'\/\/' . $internal_domain,
+					'',
+					$body_content
+				);
+			}
+
+			// Replace body content with the content from internal domains are removed.
+			if ( ! empty( $body_content ) ) {
+				// Backslashes in string literals ($,\) require to be escaped.
+				$body_content = preg_replace( '/\$(\d)/', '\\\$$1', $body_content );
+				$body_content = preg_replace( '/\n(\d)/', '\\\n$1', $body_content );
+
+				$buffer = preg_replace(
+					'/<body(.*?)>(.*?)<\/body>/is',
+					'<body$1>' . $body_content . '</body>',
+					$buffer,
+					1
+				);
 			}
 		}
 
