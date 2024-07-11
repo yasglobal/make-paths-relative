@@ -1,14 +1,7 @@
 {
 	"name": "make-paths-relative",
 	"description": "Development files for the Make Paths Relative plugin.",
-	"scripts": {
-		"lint": "npm run lint:css && npm run lint:js",
-		"lint:fix": "npm run lint:css:fix && npm run lint:js:fix",
-		"lint:css": "npx stylelint **/*.css",
-		"lint:css:fix": "npx stylelint **/*.css --fix",
-		"lint:js": "eslint .",
-		"lint:js:fix": "eslint . --fix"
-	},
+	"version": "2.0.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/yasglobal/make-paths-relative.git"
@@ -17,17 +10,16 @@
 		"url": "https://github.com/yasglobal/make-paths-relative/issues"
 	},
 	"author": "Sami Ahmed Siddiqui",
-	"devDependencies": {
-		"@wordpress/eslint-plugin": "^9.0.6",
-		"@wordpress/stylelint-config": "^19.0.5",
-		"del": "^6.0.0",
-		"eslint": "^7.30.0",
-		"gulp": "^4.0.2",
-		"gulp-clean-css": "4.3.0",
-		"gulp-rename": "2.0.0",
-		"gulp-uglify": "3.0.2"
+	"scripts": {
+		"lint": "npm run lint:css",
+		"lint:fix": "npm run lint:css:fix",
+		"lint:css": "npx stylelint **/*.css",
+		"lint:css:fix": "npx stylelint **/*.css --fix"
 	},
-	"makePathsRelative": {
-		"pluginVersion": "2.0.0"
+	"devDependencies": {
+		"@wordpress/stylelint-config": "22.3.0",
+		"gulp": "5.0.0",
+		"gulp-clean-css": "4.3.0",
+		"gulp-rename": "2.0.0"
 	}
 }
