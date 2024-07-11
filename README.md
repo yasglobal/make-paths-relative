@@ -28,9 +28,9 @@ add_filter( 'make_paths_relative_activate_all', '__return_true' );
 
 **Note**: Make sure to check the settings Page.
 
-### Thanks for the Support
+### Bug reports
 
-The support from the users that love Make Paths Relative is huge. You can support Make Paths Relative future development and help to make it even better by giving a 5-star rating with a nice message to me :)
+Bug reports for **Make Paths Relative** are [welcomed on GitHub](https://github.com/yasglobal/make-paths-relative/issues/). Please note GitHub is not a support forum, and issues that aren't properly qualified as bugs will be closed.
 
 ## Installation
 
@@ -41,7 +41,7 @@ This process defines you the steps to follow either you are installing through W
 1. Visit 'Plugins > Add New'
 2. Search for Make Paths Relative
 3. Activate Make Paths Relative from your Plugins page.
-4. Go to "after activation" below.
+4. Go to **"after activation"** below.
 
 ### Manually
 

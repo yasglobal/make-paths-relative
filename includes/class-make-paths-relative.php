@@ -19,7 +19,7 @@ final class Make_Paths_Relative {
 	 *
 	 * @var string
 	 */
-	public $version = '2.0.0';
+	public $version = '2.1.0';
 
 	/**
 	 * Class constructor.

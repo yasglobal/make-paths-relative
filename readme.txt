@@ -1,9 +1,9 @@
 === Make Paths Relative ===
-Contributors: sasiddiqui, aliya-yasir
-Tags: GDPR, URLs, Links, Paths, Relative, permalink, Absolute URLs, Relative URLs, scripts src, styles src, image src, remove_absolute
-Requires at least: 3.5
+Contributors: sasiddiqui
+Tags: Portable URLs, Relative Links, SEO-Friendly URLs, Multisite Compatibility, Subdomain Migration, URL Migration, Domain Move
+Requires at least: 2.6
 Tested up to: 6.5
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,15 +31,15 @@ This plugin empowers you to focus on creating exceptional content while eliminat
 
 If you want to make plugin works and all the paths relative without going to check/visit Settings Page so, just add this line in your theme's `functions.php`.
 
-```php
+```
 add_filter( 'make_paths_relative_activate_all', '__return_true' );
 ```
 
 **Note**: Make sure to check the settings Page.
 
-### Thanks for the Support
+### Bug reports
 
-The support from the users that love Make Paths Relative is huge. You can support Make Paths Relative future development and help to make it even better by giving a 5-star rating with a nice message to me :)
+Bug reports for **Make Paths Relative** are [welcomed on GitHub](https://github.com/yasglobal/make-paths-relative/issues/). Please note GitHub is not a support forum, and issues that aren't properly qualified as bugs will be closed.
 
 ## Installation
 
@@ -50,13 +50,13 @@ This process defines you the steps to follow either you are installing through W
 1. Visit 'Plugins > Add New'
 2. Search for Make Paths Relative
 3. Activate Make Paths Relative from your Plugins page.
-4. Go to "after activation" below.
+4. Go to **"after activation"** below.
 
 ### Manually
 
 1. Upload the `make-paths-relative` folder to the `/wp-content/plugins/` directory
 2. Activate Make Paths Relative through the 'Plugins' menu in WordPress
-3. Go to "after activation" below.
+3. Go to **"after activation"** below.
 
 ### After activation
 
@@ -65,13 +65,23 @@ This process defines you the steps to follow either you are installing through W
 
 ## Changelog
 
-= June 28, 2024 =
+= 2.1.0 - July 11, 2024 =
 
-	* Security Enhancement:
-	  * Implemented a nonce mechanism to safeguard page updates, preventing unauthorized modifications.
-	* Feature Additions:
-	  * Define multiple domains to be act as relative.
-		* Enhanced content control by allowing removal of specific domains from the entire HTML body tag.
+* Bugs:
+  * Fixed an issue where replacements using \n or $n weren't working correctly.
+* Feature Additions:
+  * You can now include slashes in hostnames, giving you more flexibility.
+  * For improved security, plugin can no longer be used on the admin dashboard.
+  * We've enhanced how relative escaped URLs are handled within the body content.
+  * Add functionality to relative WordPress stylesheet directory URIs.
+
+= 2.0.0 - June 28, 2024 =
+
+* Security Enhancement:
+	* Implemented a nonce mechanism to safeguard page updates, preventing unauthorized modifications.
+* Feature Additions:
+	* Define multiple domains to be act as relative.
+	* Enhanced content control by allowing removal of specific domains from the entire HTML body tag.
 
 = Earlier versions =
 

@@ -3,9 +3,9 @@
  * Plugin Name: Make Paths Relative
  * Plugin URI: https://www.yasglobal.com/web-design-development/wordpress/make-paths-relative/
  * Description: This plugin helps ensure your website functions correctly when moved to a different domain.
- * Version: 2.0.0
+ * Version: 2.1.0
  * Requires at least: 2.6
- * Requires PHP: 5.4
+ * Requires PHP: 5.6
  * Author: Sami Ahmed Siddiqui
  * Author URI: https://www.linkedin.com/in/sami-ahmed-siddiqui/
  * License: GPLv3
