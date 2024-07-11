@@ -46,7 +46,7 @@ class Make_Paths_Relative_Admin {
 		add_menu_page(
 			'Make Paths Relative Settings',
 			'Make Paths Relative',
-			'administrator',
+			'activate_plugins',
 			'make-paths-relative-settings',
 			array( $this, 'admin_settings_page' )
 		);
@@ -54,7 +54,7 @@ class Make_Paths_Relative_Admin {
 			'make-paths-relative-settings',
 			'Make Paths Relative Settings',
 			'Settings',
-			'administrator',
+			'activate_plugins',
 			'make-paths-relative-settings',
 			array( $this, 'admin_settings_page' )
 		);
@@ -62,7 +62,7 @@ class Make_Paths_Relative_Admin {
 			'make-paths-relative-settings',
 			'About',
 			'About',
-			'administrator',
+			'activate_plugins',
 			'make-paths-relative-about-plugins',
 			array( $this, 'about_plugin' )
 		);
