@@ -31,9 +31,9 @@ This plugin empowers you to focus on creating exceptional content while eliminat
 
 If you want to make plugin works and all the paths relative without going to check/visit Settings Page so, just add this line in your theme's `functions.php`.
 
-```
+`
 add_filter( 'make_paths_relative_activate_all', '__return_true' );
-```
+`
 
 **Note**: Make sure to check the settings Page.
 
