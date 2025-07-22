@@ -1,8 +1,8 @@
 === Make Paths Relative ===
 Contributors: sasiddiqui
-Tags: Portable URLs, Relative Links, SEO-Friendly URLs, Multisite Compatibility, Subdomain Migration, URL Migration, Domain Move
+Tags: Relative Links, Relative Paths, SEO-Friendly URLs, Migration, Remove Domain
 Requires at least: 2.6
-Tested up to: 6.5
+Tested up to: 6.8
 Stable tag: 2.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
